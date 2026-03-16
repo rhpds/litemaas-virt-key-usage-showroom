@@ -1,0 +1,66 @@
+= What is RHDP MaaS?
+:navtitle: What is RHDP MaaS?
+
+RHDP MaaS (Model as a Service) is the Red Hat Demo Platform's managed AI model access layer.
+It is built on link:https://github.com/rh-aiservices-bu/litemaas[LiteMaaS^], an open-source platform developed by the Red Hat AI Services BU, which wraps the link:https://github.com/BerriAI/litellm[LiteLLM^] proxy with subscription, key management, and usage tracking.
+
+Think of it as a private, governed API gateway to real AI models — running on Red Hat OpenShift AI with real GPUs.
+
+== How it works
+
+[source]
+----
+Your lab → virtual key (sk-...) → LiteMaaS proxy → OpenShift AI model servers
+----
+
+* You get one virtual key per lab environment
+* The key is scoped to specific models for your lab
+* All calls are authenticated, rate-limited, and tracked
+* The API is fully OpenAI-compatible — any OpenAI SDK works
+
+== What makes it different from public AI APIs
+
+[cols="1,2,2",options="header"]
+|===
+|Feature |Public APIs (OpenAI, Anthropic) |RHDP MaaS
+
+|Where models run
+|Vendor cloud
+|Red Hat OpenShift AI (your org)
+
+|Data privacy
+|Sent to vendor
+|Stays in Red Hat infrastructure
+
+|Models available
+|Commercial models
+|Open-source: Granite, Llama, Nomic, Docling
+
+|Key management
+|One global key
+|Per-lab scoped keys with quotas
+
+|API compatibility
+|OpenAI format
+|OpenAI format (drop-in replacement)
+|===
+
+== Verify your access
+
+Run this to confirm your key works and see the models available to you:
+
+[source,bash,subs="attributes+"]
+----
+curl {litellm_api_base_url}/models \
+  -H "Authorization: Bearer {litellm_virtual_key}" | python3 -m json.tool
+----
+
+You should see a list of model IDs. These are the models your key can access:
+
+----
+{litellm_available_models_list}
+----
+
+✓ If you see model names, your key is working correctly.
+
+xref:02-setup.adoc[Next: Set up your environment →]

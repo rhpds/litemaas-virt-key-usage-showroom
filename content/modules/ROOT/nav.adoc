@@ -1,19 +1,17 @@
-* xref:index.adoc[What is Showroom?]
+* xref:index.adoc[RHDP MaaS — AI Model Access]
 
-.Content Developer Guide
-* xref:quick-start.adoc[Quick Start]
-* xref:content-repo.adoc[Creating a Content Repository]
-* xref:agnosticv-config.adoc[AgnosticV Configuration]
-* xref:ui-config.adoc[UI Configuration]
-* xref:user-data.adoc[User Data and Variables]
-* xref:attribute-example.adoc[Attribute Injection Example]
-* xref:ocp4-role-reference.adoc[OCP4 Role Reference]
-* xref:vm-role-reference.adoc[VM Role Reference]
+.Getting Started
+* xref:01-overview.adoc[What is RHDP MaaS?]
+* xref:02-setup.adoc[Your Credentials]
 
-.Showroom Developer Guide
-* xref:architecture.adoc[Architecture]
-* xref:deployer.adoc[Showroom Deployer]
-* xref:images.adoc[Showroom Images]
-* xref:nookbag.adoc[Nookbag UI]
-* xref:ocp-integration.adoc[OCP Integration]
-* xref:contributing.adoc[Contributing]
+.Using AI Models
+* xref:03-module-01-chat-curl.adoc[Module 1: Chat with curl]
+* xref:04-module-02-chat-python.adoc[Module 2: Chat with Python]
+* xref:05-module-03-embeddings.adoc[Module 3: Embeddings]
+* xref:06-module-04-tokenize.adoc[Module 4: Tokenize]
+* xref:07-module-05-docling.adoc[Module 5: Document Conversion]
+
+.For Lab Authors
+* xref:08-module-06-agnosticv.adoc[Module 6: AgnosticV Integration]
+
+* xref:99-conclusion.adoc[Summary & Next Steps]

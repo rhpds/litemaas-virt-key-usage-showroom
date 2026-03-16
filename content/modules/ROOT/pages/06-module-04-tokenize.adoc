@@ -1,0 +1,115 @@
+= Module 4: Token Counting
+:navtitle: Module 4: Tokenize
+:source-highlighter: rouge
+
+The `/v1/tokenize` endpoint lets you count how many tokens your text will use *before* sending it to the model.
+This is useful for estimating cost, checking whether your input fits within the model's context window, and deciding whether to truncate long documents.
+
+NOTE: This endpoint is specific to vLLM-backed models and is not part of the standard OpenAI API.
+
+== Learning objectives
+
+By the end of this module, you'll be able to:
+
+* Count tokens in a prompt before sending it
+* Estimate token usage for cost planning
+* Decide when to truncate input to fit the context window
+
+== Exercise 1: Count tokens with curl
+
+[source,bash,subs="attributes+"]
+----
+curl $LITELLM_API_BASE/tokenize \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -d '{
+    "model": "granite-3-2-8b-instruct",
+    "prompt": "What is Red Hat OpenShift and how does it extend Kubernetes?"
+  }'
+----
+
+The response includes:
+
+* `count` — total number of tokens
+* `max_model_len` — the model's maximum context window
+* `tokens` — the list of token IDs
+
+=== Verify
+
+✓ You receive a `count` field showing the number of tokens.
+
+== Exercise 2: Token-aware prompting in Python
+
+[source,python,subs="attributes+"]
+----
+import requests
+
+API_BASE = "{litellm_api_base_url}"
+API_KEY = "{litellm_virtual_key}"
+MODEL = "granite-3-2-8b-instruct"
+MAX_TOKENS = 4000  # leave headroom for the response
+
+def count_tokens(text):
+    response = requests.post(
+        f"{API_BASE}/tokenize",
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        json={"model": MODEL, "prompt": text}
+    )
+    data = response.json()
+    return data["count"], data["max_model_len"]
+
+def truncate_if_needed(text, max_input_tokens):
+    """Rough truncation by word count if token count is too high."""
+    count, _ = count_tokens(text)
+    if count <= max_input_tokens:
+        return text, count
+    # Reduce word count proportionally
+    words = text.split()
+    ratio = max_input_tokens / count
+    truncated = " ".join(words[:int(len(words) * ratio)])
+    new_count, _ = count_tokens(truncated)
+    return truncated + " [truncated]", new_count
+
+# Example: a long document you want to summarise
+document = """
+Red Hat OpenShift is an enterprise Kubernetes platform that provides
+a consistent application platform to manage hybrid cloud, multi-cloud,
+and edge deployments. OpenShift builds on top of Kubernetes and adds
+security, developer tooling, CI/CD pipelines, service mesh, and more.
+""" * 50  # simulate a long document
+
+prompt = f"Summarise this document:\n\n{document}"
+safe_prompt, token_count = truncate_if_needed(prompt, max_input_tokens=MAX_TOKENS)
+
+print(f"Input tokens: {token_count}")
+print(f"Prompt length: {len(safe_prompt)} chars")
+----
+
+=== Verify
+
+✓ For a short text, token count is returned without truncation.
+✓ For a long text, the prompt is truncated to fit within the limit.
+
+== Quick reference: typical token counts
+
+[cols="2,1",options="header"]
+|===
+|Text |Approx. tokens
+
+|One word
+|1-2
+
+|One sentence (~10 words)
+|10-15
+
+|One paragraph (~100 words)
+|100-150
+
+|One page (~500 words)
+|500-750
+
+|10 pages (~5000 words)
+|5000-7500
+|===
+
+xref:07-module-05-docling.adoc[Next: Module 5 — Document Conversion →]

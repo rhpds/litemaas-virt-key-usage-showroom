@@ -1,0 +1,41 @@
+= Your Credentials and Environment Setup
+:navtitle: Your Credentials
+
+Before running any examples, set your credentials as shell environment variables.
+This avoids repeating them in every command.
+
+== Set environment variables
+
+[source,bash,subs="attributes+"]
+----
+export LITELLM_API_BASE="{litellm_api_base_url}"
+export LITELLM_API_KEY="{litellm_virtual_key}"
+----
+
+TIP: If you are working in a bastion terminal provided by this lab, these variables may already be set. Run `echo $LITELLM_API_KEY` to check.
+
+== Verify connectivity
+
+[source,bash]
+----
+curl $LITELLM_API_BASE/models \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -s | python3 -c "import sys,json; [print(m['id']) for m in json.load(sys.stdin)['data']]"
+----
+
+Expected output — the models your key can access:
+
+----
+{litellm_available_models_list}
+----
+
+== Install Python dependencies (optional)
+
+If you plan to use the Python examples:
+
+[source,bash]
+----
+pip install openai langchain-openai requests
+----
+
+xref:03-module-01-chat-curl.adoc[Next: Module 1 — Chat with curl →]

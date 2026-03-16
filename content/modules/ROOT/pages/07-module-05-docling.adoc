@@ -1,0 +1,127 @@
+= Module 5: Document Conversion with Docling
+:navtitle: Module 5: Document Conversion
+
+ifdef::litellm_docling_endpoint[]
+
+Docling converts PDFs, DOCX, and other document formats into clean, structured Markdown or JSON. This is the first step in many RAG (Retrieval-Augmented Generation) workflows — turn raw documents into text that a language model can reason over.
+
+NOTE: This endpoint uses a *different path* from the standard `/v1/` endpoints — it is not part of the OpenAI API spec.
+
+[%autowidth,cols="a,a"]
+|===
+| *Docling Endpoint* | `{litellm_docling_endpoint}`
+| *Docling Model* | `{litellm_docling_model}`
+|===
+
+== Learning objectives
+
+By the end of this module, you'll be able to:
+
+* Convert a PDF from a URL to Markdown using curl
+* Convert a document using Python
+* Understand where Docling fits in a RAG pipeline
+
+== Exercise 1: Convert a PDF with curl
+
+[source,bash,subs="attributes+"]
+----
+curl -X POST {litellm_docling_endpoint} \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {litellm_virtual_key}" \
+  -d '{
+    "model": "{litellm_docling_model}",
+    "http_sources": [{"url": "https://arxiv.org/pdf/2408.09869"}]
+  }'
+----
+
+The response contains a `document` object with:
+
+* `md_content` — the full document as Markdown
+* `filename` — the original filename
+
+To extract just the first 500 characters of Markdown:
+
+[source,bash,subs="attributes+"]
+----
+curl -X POST {litellm_docling_endpoint} \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {litellm_virtual_key}" \
+  -s \
+  -d '{"model":"{litellm_docling_model}","http_sources":[{"url":"https://arxiv.org/pdf/2408.09869"}]}' | \
+  python3 -c "import sys,json; d=json.load(sys.stdin); print(d['document']['md_content'][:500])"
+----
+
+NOTE: Large PDFs may take 30-60 seconds to convert. This is normal — Docling performs layout analysis, table extraction, and OCR.
+
+=== Verify
+
+✓ You receive Markdown content from the PDF.
+✓ Tables, headings, and text are preserved in the output.
+
+== Exercise 2: Convert a document with Python
+
+[source,python,subs="attributes+"]
+----
+import requests
+
+DOCLING_URL = "{litellm_docling_endpoint}"
+API_KEY = "{litellm_virtual_key}"
+MODEL = "{litellm_docling_model}"
+
+def convert_pdf(url):
+    response = requests.post(
+        DOCLING_URL,
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        json={
+            "model": MODEL,
+            "http_sources": [{"url": url}]
+        },
+        timeout=120  # Docling can take time for large PDFs
+    )
+    response.raise_for_status()
+    doc = response.json()["document"]
+    return doc["md_content"]
+
+# Convert the Docling paper itself
+markdown = convert_pdf("https://arxiv.org/pdf/2408.09869")
+print(f"Converted {len(markdown):,} characters of Markdown")
+print("\nFirst 500 characters:")
+print(markdown[:500])
+----
+
+=== Verify
+
+✓ The PDF is converted and you see clean Markdown output.
+✓ The character count shows a substantial document was processed.
+
+== Where Docling fits in a RAG pipeline
+
+[source]
+----
+PDF/DOCX → Docling → Markdown → Split into chunks → Embed chunks → Store in vector DB
+                                                                          ↓
+User query → Embed query → Search vector DB → Retrieve chunks → LLM answers with context
+----
+
+Docling handles the first step — turning raw documents into clean text that can be chunked and embedded.
+
+endif::litellm_docling_endpoint[]
+
+ifndef::litellm_docling_endpoint[]
+
+== Document Conversion with Docling
+
+Docling document conversion is not enabled for this lab environment.
+
+To enable Docling when configuring a catalog, set:
+
+[source,yaml]
+----
+ocp4_workload_litellm_virtual_keys_include_docling: true
+----
+
+This adds the `granite-docling-258m` model to your virtual key and provides the Docling endpoint in your lab credentials.
+
+endif::litellm_docling_endpoint[]
+
+xref:08-module-06-agnosticv.adoc[Next: Module 6 — AgnosticV Integration →]

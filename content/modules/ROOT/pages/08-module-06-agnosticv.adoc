@@ -1,0 +1,190 @@
+= Module 6: AgnosticV Integration
+:navtitle: Module 6: AgnosticV Integration
+:source-highlighter: rouge
+
+This module is for lab authors who want to add LiteMaaS virtual keys to their own AgnosticV catalogs.
+It shows exactly how the virtual key workload is configured, how model selection works, and how the credentials flow into Showroom.
+
+== Learning objectives
+
+By the end of this module, you'll be able to:
+
+* Add the `ocp4_workload_litellm_virtual_keys` role to a catalog
+* Configure model selection with checkboxes
+* Enable Docling for document conversion labs
+* Use the injected variables in Showroom content
+
+== How variables flow
+
+When a user provisions a lab, the role:
+
+. Creates a virtual key scoped to the selected models
+. Stores the key and endpoint in AgnosticD user data
+. Showroom reads the user data and injects values as AsciiDoc attributes
+. Your lab content uses `{litellm_virtual_key}`, `{litellm_api_base_url}`, etc.
+
+[source]
+----
+AgnosticV catalog → AgnosticD role → Virtual key created → User data stored
+                                                                ↓
+                                        Showroom reads user data → injects as attributes
+                                                                ↓
+                                              Lab content: {litellm_virtual_key}
+----
+
+== Exercise 1: Minimal catalog configuration
+
+Add this to your catalog's `common.yaml` to provision a virtual key:
+
+[source,yaml]
+----
+# Collection requirement
+requirements_content:
+  collections:
+    - name: "https://github.com/rhpds/rhpds.litellm_virtual_keys.git"
+      type: git
+      version: main
+
+# Workload
+workloads:
+  - rhpds.litellm_virtual_keys.ocp4_workload_litellm_virtual_keys
+
+# LiteMaaS connection (from secrets include)
+#include /includes/secrets/litemaas-master_api.yaml
+
+# Models and duration
+ocp4_workload_litellm_virtual_keys_models:
+  - "granite-3-2-8b-instruct"
+
+ocp4_workload_litellm_virtual_keys_duration: "7d"
+----
+
+== Exercise 2: Model selection with checkboxes
+
+Let users choose models from the catalog order form:
+
+[source,yaml]
+----
+# Build model list from checkboxes
+ocp4_workload_litellm_virtual_keys_models: >-
+  {{
+    (model_granite_8b | default(true) | bool | ternary(['granite-3-2-8b-instruct'], [])) +
+    (model_llama_scout | default(false) | bool | ternary(['llama-scout-17b'], [])) +
+    (model_nomic_embed | default(false) | bool | ternary(['nomic-embed-text-v1-5'], []))
+  }}
+
+# Catalog parameters (shown as checkboxes in the order form)
+__meta__:
+  catalog:
+    parameters:
+      - name: model_granite_8b
+        formLabel: Granite 3.2 8B (Chat)
+        formGroup: Models
+        openAPIV3Schema:
+          type: boolean
+          default: true
+
+      - name: model_llama_scout
+        formLabel: Llama Scout 17B (Chat, 400K context)
+        formGroup: Models
+        openAPIV3Schema:
+          type: boolean
+          default: false
+
+      - name: model_nomic_embed
+        formLabel: Nomic Embed v1.5 (Embeddings)
+        formGroup: Models
+        openAPIV3Schema:
+          type: boolean
+          default: false
+----
+
+== Exercise 3: Enable Docling
+
+Add document conversion support:
+
+[source,yaml]
+----
+# Enable Docling — adds granite-docling-258m to the key
+# and sets litellm_docling_endpoint in user data
+ocp4_workload_litellm_virtual_keys_include_docling: "{{ enable_docling | default(false) | bool }}"
+
+__meta__:
+  catalog:
+    parameters:
+      - name: enable_docling
+        formLabel: Document Conversion (Docling)
+        formGroup: Models
+        description: |
+          Enable Docling for PDF/DOCX to Markdown conversion.
+          Uses the /docling/v1alpha/convert/source endpoint.
+        openAPIV3Schema:
+          type: boolean
+          default: false
+----
+
+== Available user data variables
+
+These variables are stored in AgnosticD user data and injected into Showroom:
+
+[cols="2,3",options="header"]
+|===
+|Variable |Value
+
+|`litellm_api_base_url`
+|Full `/v1` base URL (e.g., `https://litellm-prod.apps.../v1`)
+
+|`litellm_virtual_key`
+|The `sk-...` virtual key
+
+|`litellm_available_models`
+|List of model names (array)
+
+|`litellm_available_models_list`
+|Comma-separated model names (string, for display)
+
+|`litellm_key_duration`
+|Key validity (e.g., `7d`)
+
+|`litellm_docling_endpoint`
+|Docling endpoint URL (set only if `include_docling: true`)
+
+|`litellm_docling_model`
+|Docling model name (set only if `include_docling: true`)
+|===
+
+== Using variables in Showroom AsciiDoc
+
+In your Showroom `.adoc` files, reference variables as attributes:
+
+[source,asciidoc]
+----
+Your API base URL: `{litellm_api_base_url}`
+
+Your virtual key: `{litellm_virtual_key}`
+
+Run this to test:
+
+[source,bash,subs="attributes+"]
+ curl {litellm_api_base_url}/models \
+   -H "Authorization: Bearer {litellm_virtual_key}"
+----
+
+IMPORTANT: Always add `subs="attributes+"` to code blocks where you use `{variable}` substitution.
+
+== Conditional Docling content
+
+Use AsciiDoc conditionals to show Docling content only when the endpoint is available:
+
+[source,asciidoc]
+----
+\ifdef::litellm_docling_endpoint[]
+
+== Document Conversion
+
+Your key includes Docling access at `{litellm_docling_endpoint}`.
+
+\endif::litellm_docling_endpoint[]
+----
+
+xref:99-conclusion.adoc[Next: Summary →]
