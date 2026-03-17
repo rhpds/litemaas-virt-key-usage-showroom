@@ -88,20 +88,14 @@ Available model names on production LiteMaaS:
 
 == Enable Docling
 
-[source,yaml]
-----
-ocp4_workload_litellm_virtual_keys_include_docling: "{{ enable_docling | default(false) | bool }}"
+Set `ocp4_workload_litellm_virtual_keys_include_docling: true` in your catalog to add Docling support.
 
-__meta__:
-  catalog:
-    parameters:
-      - name: enable_docling
-        formLabel: Document Conversion (Docling)
-        formGroup: Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-----
+When enabled, the role adds `granite-docling-258m` to the key and stores two additional Showroom variables:
+
+* `{litellm_docling_endpoint}` — the `/docling/v1alpha/convert/source` endpoint URL
+* `{litellm_docling_model}` — `granite-docling-258m`
+
+Use `ifdef::litellm_docling_endpoint[]` in your `.adoc` files to guard Docling content — the attribute is only defined when Docling is enabled.
 
 == Optional — model checkboxes in order form
 
