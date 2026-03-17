@@ -6,8 +6,10 @@
 .Using AI Models
 * xref:03-module-01-chat-curl.adoc[Module 1: Chat with curl]
 * xref:04-module-02-chat-python.adoc[Module 2: Chat with Python]
-* xref:05-module-03-embeddings.adoc[Module 3: Embeddings]
-* xref:06-module-04-tokenize.adoc[Module 4: Tokenize]
-* xref:07-module-05-docling.adoc[Module 5: Document Conversion]
+* xref:06-module-04-tokenize.adoc[Module 3: Tokenize]
 
 * xref:99-conclusion.adoc[Summary & Next Steps]
+
+.Optional Models
+* xref:05-module-03-embeddings.adoc[Embeddings (Nomic Embed)]
+* xref:07-module-05-docling.adoc[Document Conversion (Docling)]

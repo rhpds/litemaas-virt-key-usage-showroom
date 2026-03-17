@@ -33,9 +33,12 @@ export LITELLM_API_KEY="{litellm_virtual_key}"
 
 * *Module 1* — xref:03-module-01-chat-curl.adoc[Chat with curl]
 * *Module 2* — xref:04-module-02-chat-python.adoc[Chat with Python]
-* *Module 3* — xref:05-module-03-embeddings.adoc[Text Embeddings]
-* *Module 4* — xref:06-module-04-tokenize.adoc[Token Counting]
-* *Module 5* — xref:07-module-05-docling.adoc[Document Conversion (Docling)]
+* *Module 3* — xref:06-module-04-tokenize.adoc[Token Counting]
+
+*Optional — only if enabled in your key:*
+
+* xref:05-module-03-embeddings.adoc[Embeddings] — requires `nomic-embed-text-v1-5`
+* xref:07-module-05-docling.adoc[Document Conversion (Docling)] — requires `include_docling: true`
 
 == For Lab Authors
 
