@@ -1,13 +1,9 @@
 = RHDP MaaS — Using AI Models
 :navtitle: RHDP MaaS — AI Model Access
 
-Welcome! This guide shows you how to use the Red Hat Demo Platform Model-as-a-Service (RHDP MaaS) — your access point to production AI models running on OpenShift AI.
-
-Your virtual key gives you an OpenAI-compatible API endpoint backed by real GPU-hosted models.
-
 == OpenShift Console
 
-If you want to explore or deploy applications on OpenShift, use the embedded *OCP Console* tab on the right and log in with:
+Use the embedded *OCP Console* tab on the right and log in with:
 
 [%autowidth,cols="a,a"]
 |===
