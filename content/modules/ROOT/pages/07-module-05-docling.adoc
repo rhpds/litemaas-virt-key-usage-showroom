@@ -124,4 +124,4 @@ This adds the `granite-docling-258m` model to your virtual key and provides the 
 
 endif::litellm_docling_endpoint[]
 
-xref:08-module-06-agnosticv.adoc[Next: Module 6 — AgnosticV Integration →]
+xref:99-conclusion.adoc[Next: Summary →]
