@@ -33,9 +33,9 @@ AgnosticV catalog → AgnosticD role → Virtual key created → User data store
                                               Lab content: {litellm_virtual_key}
 ----
 
-== Exercise 1: Minimal catalog configuration
+== Exercise 1: Standard catalog configuration
 
-Add this to your catalog's `common.yaml` to provision a virtual key:
+Most catalogs hardcode the model list directly. Pick the models your lab needs and list them:
 
 [source,yaml]
 ----
@@ -46,21 +46,69 @@ requirements_content:
       type: git
       version: main
 
-# Workload
+# Workloads — run litellm keys BEFORE Showroom so credentials are baked in
 workloads:
+  - rhpds.litellm_virtual_keys.ocp4_workload_litellm_virtual_keys
+
+# Run on destroy to delete the key
+remove_workloads:
   - rhpds.litellm_virtual_keys.ocp4_workload_litellm_virtual_keys
 
 # LiteMaaS connection (from secrets include)
 #include /includes/secrets/litemaas-master_api.yaml
 
-# Models and duration
+# Hardcode the models your lab uses
 ocp4_workload_litellm_virtual_keys_models:
   - "granite-3-2-8b-instruct"
+  - "nomic-embed-text-v1-5"
+
+# Enable Docling if your lab needs document conversion
+ocp4_workload_litellm_virtual_keys_include_docling: false
 
 ocp4_workload_litellm_virtual_keys_duration: "7d"
 ----
 
-== Exercise 2: Model selection with checkboxes
+Available model names on production LiteMaaS:
+
+[cols="2,3",options="header"]
+|===
+|Model name (use exactly as shown) |Type
+
+|`granite-3-2-8b-instruct`
+|Chat (default)
+
+|`granite-4-0-h-tiny`
+|Chat, tool calling
+
+|`llama-scout-17b`
+|Chat, 400K context
+
+|`deepseek-r1-distill-qwen-14b`
+|Chat, reasoning
+
+|`gpt-oss-120b`
+|Chat, large
+
+|`microsoft-phi-4`
+|Chat, compact
+
+|`qwen3-14b`
+|Chat, multilingual
+
+|`codellama-7b-instruct`
+|Code chat
+
+|`Llama-Guard-3-1B`
+|Safety classification
+
+|`nomic-embed-text-v1-5`
+|Embeddings
+
+|`granite-docling-258m`
+|Document conversion (use `include_docling: true` instead)
+|===
+
+== Exercise 2: Optional — model selection with checkboxes
 
 Let users choose models from the catalog order form.
 All models currently available on production LiteMaaS:
