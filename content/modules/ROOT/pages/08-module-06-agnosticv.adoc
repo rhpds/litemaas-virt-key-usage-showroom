@@ -97,6 +97,8 @@ When enabled, the role adds `granite-docling-258m` to the key and stores two add
 
 Use `ifdef::litellm_docling_endpoint[]` in your `.adoc` files to guard Docling content — the attribute is only defined when Docling is enabled.
 
+For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].
+
 == Optional — model checkboxes in order form
 
 Instead of hardcoding, let users pick models at order time:
