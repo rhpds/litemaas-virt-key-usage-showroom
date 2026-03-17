@@ -95,8 +95,6 @@ When enabled, the role adds `granite-docling-258m` to the key and stores two add
 * `{litellm_docling_endpoint}` — the `/docling/v1alpha/convert/source` endpoint URL
 * `{litellm_docling_model}` — `granite-docling-258m`
 
-Use `ifdef::litellm_docling_endpoint[]` in your `.adoc` files to guard Docling content — the variable is only set when Docling is enabled, so the guard works automatically.
-
 For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].
 
 == Multi-user workshops
@@ -149,7 +147,7 @@ The role stores these variables in AgnosticD user data. Showroom injects them as
 |`{litellm_api_base_url}/embeddings` — generate text embeddings
 
 |`litellm_docling_endpoint`
-|Docling conversion URL — *only set* when `include_docling: true`
+|Docling conversion URL — only set when `ocp4_workload_litellm_virtual_keys_include_docling: true`
 
 |`litellm_docling_model`
 |`granite-docling-258m` — only set when Docling is enabled
