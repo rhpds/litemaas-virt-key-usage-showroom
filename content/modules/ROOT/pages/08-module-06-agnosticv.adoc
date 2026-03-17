@@ -90,7 +90,7 @@ Available model names on production LiteMaaS:
 
 Set `ocp4_workload_litellm_virtual_keys_include_docling: true` in your catalog to add Docling support.
 
-When enabled, the role adds `granite-docling-258m` to the key and stores two additional Showroom variables:
+When enabled, the role adds `granite-docling-258m` to the key and stores two additional user data variables:
 
 * `{litellm_docling_endpoint}` — the `/docling/v1alpha/convert/source` endpoint URL
 * `{litellm_docling_model}` — `granite-docling-258m`
@@ -135,7 +135,7 @@ Always add `subs="attributes+"` to code blocks that use them.
 |The `sk-...` virtual key
 
 |`litellm_available_models_list`
-|Comma-separated model names (for display)
+|Comma-separated model names (for display) — includes `granite-docling-258m` when Docling is enabled
 
 |`litellm_key_duration`
 |Key validity (e.g., `7d`)
@@ -163,7 +163,7 @@ ocp4_workload_litellm_virtual_keys_models: >-
   {{
     (model_granite_8b  | default(true)  | bool | ternary(['granite-3-2-8b-instruct'], [])) +
     (model_nomic_embed | default(false) | bool | ternary(['nomic-embed-text-v1-5'], [])) +
-    (model_docling_258m| default(false) | bool | ternary(['deepseek-r1-distill-qwen-14b'], []))
+    (model_deepseek    | default(false) | bool | ternary(['deepseek-r1-distill-qwen-14b'], []))
   }}
 
 __meta__:
