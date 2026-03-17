@@ -99,6 +99,26 @@ Use `ifdef::litellm_docling_endpoint[]` in your `.adoc` files to guard Docling c
 
 For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].
 
+== Multi-user workshops
+
+[source,yaml]
+----
+__meta__:
+  catalog:
+    multiuser: true
+    parameters:
+      - name: num_users
+        formLabel: Number of Users
+        formGroup: Lab Configuration
+        openAPIV3Schema:
+          type: integer
+          default: 1
+          minimum: 1
+          maximum: 30
+----
+
+TIP: `{litellm_virtual_key}` automatically resolves to each logged-in user's own key — no changes needed in your content.
+
 == Optional — model checkboxes in order form
 
 Instead of hardcoding, let users pick models at order time:
@@ -123,26 +143,6 @@ __meta__:
           default: true
       # repeat for each model...
 ----
-
-== Multi-user workshops
-
-[source,yaml]
-----
-__meta__:
-  catalog:
-    multiuser: true
-    parameters:
-      - name: num_users
-        formLabel: Number of Users
-        formGroup: Lab Configuration
-        openAPIV3Schema:
-          type: integer
-          default: 1
-          minimum: 1
-          maximum: 30
-----
-
-TIP: `{litellm_virtual_key}` automatically resolves to each logged-in user's own key — no changes needed in your content.
 
 == User data variables
 
