@@ -13,5 +13,5 @@ tabs:
   - name: OCP Console
     url: 'https://console-openshift-console.${DOMAIN}'
   - name: Terminal
-    path: /terminal
+    path: /wetty
     port: 443

@@ -5,7 +5,34 @@ Welcome! This guide shows you how to use the Red Hat Demo Platform Model-as-a-Se
 
 Your virtual key gives you an OpenAI-compatible API endpoint backed by real GPU-hosted models.
 
-== Your credentials
+== OpenShift Console
+
+If you want to explore or deploy applications on OpenShift, use the embedded *OCP Console* tab on the right and log in with:
+
+[%autowidth,cols="a,a"]
+|===
+| *Console URL* | link:{openshift_console_url}[{openshift_console_url},window=_blank]
+| *Username* | `kubeadmin`
+| *Password* | `{openshift_kubeadmin_password}`
+|===
+
+== Terminal (Bastion SSH)
+
+[%autowidth,cols="a,a"]
+|===
+| *Host* | `{bastion_public_hostname}`
+| *Username* | `{bastion_ssh_user_name}`
+| *Password* | `{bastion_ssh_password}`
+|===
+
+Use the *Terminal* tab on the right to connect, or run:
+
+[source,bash,subs="attributes+"]
+----
+ssh {bastion_ssh_user_name}@{bastion_public_hostname}
+----
+
+== LiteMaaS API Credentials
 
 [%autowidth,cols="a,a"]
 |===
