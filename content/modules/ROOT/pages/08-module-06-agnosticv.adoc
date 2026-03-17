@@ -39,6 +39,16 @@ Most catalogs hardcode the model list directly. Pick the models your lab needs a
 
 [source,yaml]
 ----
+# Standard AgnosticV includes — required in every catalog
+#include /includes/agd-v2-mapping.yaml
+#include /includes/terms-of-service.yaml
+#include /includes/parameters/purpose.yaml
+
+# LiteMaaS connection (URL + master key)
+#include /includes/secrets/litemaas-master_api.yaml
+# Passes requester_email and catalog_item_name to LiteLLM for usage tracking
+#include /includes/parameters/litellm_metadata.yaml
+
 # Collection requirement
 requirements_content:
   collections:
@@ -53,11 +63,6 @@ workloads:
 # Run on destroy to delete the key
 remove_workloads:
   - rhpds.litellm_virtual_keys.ocp4_workload_litellm_virtual_keys
-
-# LiteMaaS connection (URL + master key)
-#include /includes/secrets/litemaas-master_api.yaml
-# Passes requester_email and catalog_item_name to LiteLLM for usage tracking
-#include /includes/parameters/litellm_metadata.yaml
 
 # Hardcode the models your lab uses
 ocp4_workload_litellm_virtual_keys_models:
