@@ -121,37 +121,62 @@ TIP: `{litellm_virtual_key}` automatically resolves to each logged-in user's own
 
 == User data variables
 
-These are injected as AsciiDoc attributes in your Showroom content.
-Always add `subs="attributes+"` to code blocks that use them.
+The role stores these variables in AgnosticD user data. Showroom injects them as AsciiDoc attributes — use `{variable}` in your content and add `subs="attributes+"` to source blocks.
 
 [cols="2,3",options="header"]
 |===
 |Variable |Value
 
 |`litellm_api_base_url`
-|Full `/v1` base URL
+|Full `/v1` base URL (e.g. `https://litellm-prod.apps.maas.redhatworkshops.io/v1`)
 
 |`litellm_virtual_key`
-|The `sk-...` virtual key
+|The `sk-...` virtual key scoped to the selected models
+
+|`litellm_available_models`
+|List of model names the key can access (array)
 
 |`litellm_available_models_list`
-|Comma-separated model names (for display) — includes `granite-docling-258m` when Docling is enabled
+|Same as above, comma-separated string for display — includes `granite-docling-258m` when Docling is enabled
 
 |`litellm_key_duration`
-|Key validity (e.g., `7d`)
+|Key validity period (e.g. `7d`)
 
 |`litellm_tokenize_endpoint`
-|`/v1/tokenize` URL
+|`{litellm_api_base_url}/tokenize` — count tokens before sending to model
 
 |`litellm_embeddings_endpoint`
-|`/v1/embeddings` URL
+|`{litellm_api_base_url}/embeddings` — generate text embeddings
 
 |`litellm_docling_endpoint`
-|Docling URL — *only defined* when `include_docling: true`
+|Docling conversion URL — *only set* when `include_docling: true`
 
 |`litellm_docling_model`
-|Docling model name — only defined when docling is enabled
+|`granite-docling-258m` — only set when Docling is enabled
 |===
+
+=== Verify your key and list available models
+
+Use `litellm_api_base_url` and `litellm_virtual_key` to call the models endpoint — this is how users confirm their key works:
+
+[source,bash,subs="attributes+"]
+----
+curl {litellm_api_base_url}/models \
+  -H "Authorization: Bearer {litellm_virtual_key}" \
+  -s | python3 -c "import sys,json; [print(m['id']) for m in json.load(sys.stdin)['data']]"
+----
+
+Or in Python:
+
+[source,python,subs="attributes+"]
+----
+from openai import OpenAI
+
+client = OpenAI(base_url="{litellm_api_base_url}", api_key="{litellm_virtual_key}")
+models = client.models.list()
+for m in models.data:
+    print(m.id)
+----
 
 == Optional — model checkboxes in order form
 
