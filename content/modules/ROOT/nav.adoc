@@ -1,5 +1,8 @@
 * xref:index.adoc[RHDP MaaS — AI Model Access]
 
+.For Lab Authors
+* xref:08-module-06-agnosticv.adoc[AgnosticV Integration Guide]
+
 .Getting Started
 * xref:01-overview.adoc[What is RHDP MaaS?]
 * xref:02-setup.adoc[Your Credentials]
@@ -10,8 +13,5 @@
 * xref:05-module-03-embeddings.adoc[Module 3: Embeddings]
 * xref:06-module-04-tokenize.adoc[Module 4: Tokenize]
 * xref:07-module-05-docling.adoc[Module 5: Document Conversion]
-
-.For Lab Authors
-* xref:08-module-06-agnosticv.adoc[Module 6: AgnosticV Integration]
 
 * xref:99-conclusion.adoc[Summary & Next Steps]
