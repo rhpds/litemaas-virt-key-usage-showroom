@@ -119,31 +119,6 @@ __meta__:
 
 TIP: `{litellm_virtual_key}` automatically resolves to each logged-in user's own key — no changes needed in your content.
 
-== Optional — model checkboxes in order form
-
-Instead of hardcoding, let users pick models at order time:
-
-[source,yaml]
-----
-ocp4_workload_litellm_virtual_keys_models: >-
-  {{
-    (model_granite_8b  | default(true)  | bool | ternary(['granite-3-2-8b-instruct'], [])) +
-    (model_nomic_embed | default(false) | bool | ternary(['nomic-embed-text-v1-5'], [])) +
-    (model_docling_258m| default(false) | bool | ternary(['deepseek-r1-distill-qwen-14b'], []))
-  }}
-
-__meta__:
-  catalog:
-    parameters:
-      - name: model_granite_8b
-        formLabel: Granite 3.2 8B Instruct
-        formGroup: Models
-        openAPIV3Schema:
-          type: boolean
-          default: true
-      # repeat for each model...
-----
-
 == User data variables
 
 These are injected as AsciiDoc attributes in your Showroom content.
@@ -177,5 +152,30 @@ Always add `subs="attributes+"` to code blocks that use them.
 |`litellm_docling_model`
 |Docling model name — only defined when docling is enabled
 |===
+
+== Optional — model checkboxes in order form
+
+Instead of hardcoding, let users pick models at order time:
+
+[source,yaml]
+----
+ocp4_workload_litellm_virtual_keys_models: >-
+  {{
+    (model_granite_8b  | default(true)  | bool | ternary(['granite-3-2-8b-instruct'], [])) +
+    (model_nomic_embed | default(false) | bool | ternary(['nomic-embed-text-v1-5'], [])) +
+    (model_docling_258m| default(false) | bool | ternary(['deepseek-r1-distill-qwen-14b'], []))
+  }}
+
+__meta__:
+  catalog:
+    parameters:
+      - name: model_granite_8b
+        formLabel: Granite 3.2 8B Instruct
+        formGroup: Models
+        openAPIV3Schema:
+          type: boolean
+          default: true
+      # repeat for each model...
+----
 
 xref:99-conclusion.adoc[Next: Summary →]
