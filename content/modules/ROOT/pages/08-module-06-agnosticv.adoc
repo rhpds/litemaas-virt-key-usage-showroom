@@ -11,6 +11,7 @@ By the end of this module, you'll be able to:
 
 * Add the `ocp4_workload_litellm_virtual_keys` role to a catalog
 * Configure model selection with checkboxes
+* Set up multi-user workshops with per-user keys via `num_users`
 * Enable Docling for document conversion labs
 * Use the injected variables in Showroom content
 
@@ -171,7 +172,34 @@ __meta__:
           default: false
 ----
 
-== Exercise 3: Enable Docling
+== Exercise 3: Multi-user Showroom
+
+For instructor-led workshops where each attendee needs their own key, add `num_users` to the catalog.
+The role creates one key per user (e.g. `virtkey-{guid}-user1`, `user2`, `user3`).
+Showroom then injects the *correct key for each logged-in user* automatically via `{litellm_virtual_key}`.
+
+[source,yaml]
+----
+# Each user gets their own scoped virtual key
+__meta__:
+  catalog:
+    multiuser: true
+    parameters:
+      - name: num_users
+        formLabel: Number of Users
+        formGroup: Lab Configuration
+        openAPIV3Schema:
+          type: integer
+          default: 1
+          minimum: 1
+          maximum: 30
+----
+
+TIP: No changes needed in the role configuration or Showroom content.
+`{litellm_virtual_key}` in your `.adoc` files automatically resolves to *the requesting user's key*.
+User 1 sees their key, user 2 sees theirs — same template, personalised per login.
+
+== Exercise 4: Enable Docling
 
 Add document conversion support:
 
