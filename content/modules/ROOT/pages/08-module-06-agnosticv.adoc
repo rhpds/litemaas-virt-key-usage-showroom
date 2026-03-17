@@ -183,9 +183,11 @@ If your catalog has workloads that run *after* the virtual key role, they can re
 [source,yaml]
 ----
 # Pass LiteMaaS credentials to another workload
-my_workload_litellm_api_url: "{{ lookup('agnosticd_user_data', 'litellm_api_base_url') | default('') }}"
-my_workload_litellm_api_key: "{{ lookup('agnosticd_user_data', 'litellm_virtual_key') | default('') }}"
-my_workload_litellm_models:  "{{ lookup('agnosticd_user_data', 'litellm_available_models') | default([]) }}"
+my_workload_litellm_api_url:      "{{ lookup('agnosticd_user_data', 'litellm_api_base_url') | default('') }}"
+my_workload_litellm_api_key:      "{{ lookup('agnosticd_user_data', 'litellm_virtual_key') | default('') }}"
+my_workload_litellm_models:       "{{ lookup('agnosticd_user_data', 'litellm_available_models') | default([]) }}"
+my_workload_docling_endpoint:     "{{ lookup('agnosticd_user_data', 'litellm_docling_endpoint') | default('') }}"
+my_workload_docling_model:        "{{ lookup('agnosticd_user_data', 'litellm_docling_model') | default('') }}"
 ----
 
 TIP: The `ocp4_workload_litellm_virtual_keys` workload must run *before* the workload that does the lookup, so the data is available.
