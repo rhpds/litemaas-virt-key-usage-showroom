@@ -2,6 +2,12 @@
 :navtitle: Module 3: Embeddings
 :source-highlighter: rouge
 
+ifndef::litellm_has_embeddings[]
+NOTE: This module requires the *Nomic Embed v1.5* (`nomic-embed-text-v1-5`) embedding model, which is not enabled in your virtual key. To access this module, re-provision with the *Nomic Embed v1.5* checkbox selected in the catalog order form.
+endif::litellm_has_embeddings[]
+
+ifdef::litellm_has_embeddings[]
+
 Embeddings convert text into dense numeric vectors that capture semantic meaning.
 Two pieces of text that mean similar things will have vectors that are close together — even if they use different words.
 This is the foundation of semantic search, RAG (Retrieval-Augmented Generation), and clustering.
@@ -128,5 +134,7 @@ response = client.embeddings.create(
 for i, item in enumerate(response.data):
     print(f"Text {i}: {len(item.embedding)} dimensions")
 ----
+
+endif::litellm_has_embeddings[]
 
 xref:06-module-04-tokenize.adoc[Next: Module 4 — Tokenize →]
