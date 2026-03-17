@@ -12,6 +12,8 @@ By the end of this module, you'll be able to:
 * Stream a response token by token
 * Send a multi-turn conversation with message history
 
+TIP: Examples use `granite-3-2-8b-instruct` as the default. Swap the `model` field with any chat model in your key: `{litellm_available_models_list}`
+
 == Exercise 1: Basic chat completion
 
 Send your first request to a chat model.

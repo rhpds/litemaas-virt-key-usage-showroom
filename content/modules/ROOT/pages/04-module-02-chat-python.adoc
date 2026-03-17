@@ -14,6 +14,8 @@ By the end of this module, you'll be able to:
 * Build a simple multi-turn conversation loop
 * Integrate with Langchain
 
+TIP: Examples use `granite-3-2-8b-instruct` as the default. Swap the `model` field with any chat model in your key: `{litellm_available_models_list}`
+
 == Exercise 1: Basic chat with the OpenAI SDK
 
 [source,python,subs="attributes+"]

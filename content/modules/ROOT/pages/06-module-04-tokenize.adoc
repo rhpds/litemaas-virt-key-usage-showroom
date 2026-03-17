@@ -15,6 +15,8 @@ By the end of this module, you'll be able to:
 * Estimate token usage for cost planning
 * Decide when to truncate input to fit the context window
 
+TIP: Examples use `granite-3-2-8b-instruct`. Swap the `model` field with any model in your key — tokenize works with all vLLM-backed models: `{litellm_available_models_list}`
+
 == Exercise 1: Count tokens with curl
 
 [source,bash,subs="attributes+"]
