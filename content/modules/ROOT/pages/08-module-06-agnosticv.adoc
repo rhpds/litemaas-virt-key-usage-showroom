@@ -54,8 +54,10 @@ workloads:
 remove_workloads:
   - rhpds.litellm_virtual_keys.ocp4_workload_litellm_virtual_keys
 
-# LiteMaaS connection (from secrets include)
+# LiteMaaS connection (URL + master key)
 #include /includes/secrets/litemaas-master_api.yaml
+# Passes requester_email and catalog_item_name to LiteLLM for usage tracking
+#include /includes/parameters/litellm_metadata.yaml
 
 # Hardcode the models your lab uses
 ocp4_workload_litellm_virtual_keys_models:
