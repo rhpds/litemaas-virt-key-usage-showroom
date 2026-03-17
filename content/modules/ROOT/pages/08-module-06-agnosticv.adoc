@@ -2,40 +2,11 @@
 :navtitle: AgnosticV Integration Guide
 :source-highlighter: rouge
 
-This module is for lab authors who want to add LiteMaaS virtual keys to their own AgnosticV catalogs.
-It shows exactly how the virtual key workload is configured, how model selection works, and how the credentials flow into Showroom.
+Reference for lab authors who want to add LiteMaaS virtual keys to their own AgnosticV catalogs.
 
-== Learning objectives
+== Standard catalog configuration
 
-By the end of this module, you'll be able to:
-
-* Add the `ocp4_workload_litellm_virtual_keys` role to a catalog
-* Configure model selection with checkboxes
-* Set up multi-user workshops with per-user keys via `num_users`
-* Enable Docling for document conversion labs
-* Use the injected variables in Showroom content
-
-== How variables flow
-
-When a user provisions a lab, the role:
-
-. Creates a virtual key scoped to the selected models
-. Stores the key and endpoint in AgnosticD user data
-. Showroom reads the user data and injects values as AsciiDoc attributes
-. Your lab content uses `{litellm_virtual_key}`, `{litellm_api_base_url}`, etc.
-
-[source]
-----
-AgnosticV catalog → AgnosticD role → Virtual key created → User data stored
-                                                                ↓
-                                        Showroom reads user data → injects as attributes
-                                                                ↓
-                                              Lab content: {litellm_virtual_key}
-----
-
-== Exercise 1: Standard catalog configuration
-
-Most catalogs hardcode the model list directly. Pick the models your lab needs and list them:
+Add the following to your catalog's `common.yaml`:
 
 [source,yaml]
 ----
@@ -69,7 +40,7 @@ ocp4_workload_litellm_virtual_keys_models:
   - "granite-3-2-8b-instruct"
   - "nomic-embed-text-v1-5"
 
-# Enable Docling if your lab needs document conversion
+# Enable Docling for PDF/DOCX → Markdown conversion
 ocp4_workload_litellm_virtual_keys_include_docling: false
 
 ocp4_workload_litellm_virtual_keys_duration: "7d"
@@ -77,9 +48,9 @@ ocp4_workload_litellm_virtual_keys_duration: "7d"
 
 Available model names on production LiteMaaS:
 
-[cols="2,3",options="header"]
+[cols="2,1",options="header"]
 |===
-|Model name (use exactly as shown) |Type
+|Model name |Type
 
 |`granite-3-2-8b-instruct`
 |Chat (default)
@@ -106,136 +77,61 @@ Available model names on production LiteMaaS:
 |Code chat
 
 |`Llama-Guard-3-1B`
-|Safety classification
+|Safety
 
 |`nomic-embed-text-v1-5`
 |Embeddings
 
 |`granite-docling-258m`
-|Document conversion (use `include_docling: true` instead)
+|Docling (use `include_docling: true`)
 |===
 
-== Exercise 2: Optional — model selection with checkboxes
-
-Let users choose models from the catalog order form.
-All models currently available on production LiteMaaS:
+== Enable Docling
 
 [source,yaml]
 ----
-# Build model list from checkboxes
-ocp4_workload_litellm_virtual_keys_models: >-
-  {{
-    (model_granite_8b      | default(true)  | bool | ternary(['granite-3-2-8b-instruct'], [])) +
-    (model_granite_4_tiny  | default(false) | bool | ternary(['granite-4-0-h-tiny'], [])) +
-    (model_llama_scout     | default(false) | bool | ternary(['llama-scout-17b'], [])) +
-    (model_deepseek_r1     | default(false) | bool | ternary(['deepseek-r1-distill-qwen-14b'], [])) +
-    (model_gpt_oss_120b    | default(false) | bool | ternary(['gpt-oss-120b'], [])) +
-    (model_phi4            | default(false) | bool | ternary(['microsoft-phi-4'], [])) +
-    (model_qwen3_14b       | default(false) | bool | ternary(['qwen3-14b'], [])) +
-    (model_codellama       | default(false) | bool | ternary(['codellama-7b-instruct'], [])) +
-    (model_llama_guard     | default(false) | bool | ternary(['Llama-Guard-3-1B'], [])) +
-    (model_nomic_embed     | default(false) | bool | ternary(['nomic-embed-text-v1-5'], []))
-  }}
+ocp4_workload_litellm_virtual_keys_include_docling: "{{ enable_docling | default(false) | bool }}"
 
-# Docling is handled separately via include_docling flag
-ocp4_workload_litellm_virtual_keys_include_docling: "{{ model_docling | default(false) | bool }}"
-
-# Catalog parameters (shown as checkboxes in the order form)
 __meta__:
   catalog:
     parameters:
-      # Chat & Text Models
-      - name: model_granite_8b
-        formLabel: Granite 3.2 8B Instruct
-        formGroup: Chat & Text Models
-        openAPIV3Schema:
-          type: boolean
-          default: true
-
-      - name: model_granite_4_tiny
-        formLabel: Granite 4.0 H Tiny
-        formGroup: Chat & Text Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      - name: model_llama_scout
-        formLabel: Llama 4 Scout 17B (400K context)
-        formGroup: Chat & Text Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      - name: model_deepseek_r1
-        formLabel: DeepSeek R1 Distill Qwen 14B
-        formGroup: Chat & Text Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      - name: model_gpt_oss_120b
-        formLabel: GPT OSS 120B
-        formGroup: Chat & Text Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      - name: model_phi4
-        formLabel: Microsoft Phi-4
-        formGroup: Chat & Text Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      - name: model_qwen3_14b
-        formLabel: Qwen 3 14B
-        formGroup: Chat & Text Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      # Code Models
-      - name: model_codellama
-        formLabel: CodeLlama 7B Instruct
-        formGroup: Code Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      # Safety
-      - name: model_llama_guard
-        formLabel: Llama Guard 3 1B
-        formGroup: Safety & Moderation
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      # Embedding Models
-      - name: model_nomic_embed
-        formLabel: Nomic Embed v1.5
-        formGroup: Embedding Models
-        openAPIV3Schema:
-          type: boolean
-          default: false
-
-      # Document Conversion
-      - name: model_docling
-        formLabel: Granite Docling 258M
-        formGroup: Document Conversion
+      - name: enable_docling
+        formLabel: Document Conversion (Docling)
+        formGroup: Models
         openAPIV3Schema:
           type: boolean
           default: false
 ----
 
-== Exercise 3: Multi-user Showroom
+== Optional — model checkboxes in order form
 
-For instructor-led workshops where each attendee needs their own key, add `num_users` to the catalog.
-The role creates one key per user (e.g. `virtkey-{guid}-user1`, `user2`, `user3`).
-Showroom then injects the *correct key for each logged-in user* automatically via `{litellm_virtual_key}`.
+Instead of hardcoding, let users pick models at order time:
 
 [source,yaml]
 ----
-# Each user gets their own scoped virtual key
+ocp4_workload_litellm_virtual_keys_models: >-
+  {{
+    (model_granite_8b  | default(true)  | bool | ternary(['granite-3-2-8b-instruct'], [])) +
+    (model_nomic_embed | default(false) | bool | ternary(['nomic-embed-text-v1-5'], [])) +
+    (model_docling_258m| default(false) | bool | ternary(['deepseek-r1-distill-qwen-14b'], []))
+  }}
+
+__meta__:
+  catalog:
+    parameters:
+      - name: model_granite_8b
+        formLabel: Granite 3.2 8B Instruct
+        formGroup: Models
+        openAPIV3Schema:
+          type: boolean
+          default: true
+      # repeat for each model...
+----
+
+== Multi-user workshops
+
+[source,yaml]
+----
 __meta__:
   catalog:
     multiuser: true
@@ -250,155 +146,88 @@ __meta__:
           maximum: 30
 ----
 
-TIP: No changes needed in the role configuration or Showroom content.
-`{litellm_virtual_key}` in your `.adoc` files automatically resolves to *the requesting user's key*.
-User 1 sees their key, user 2 sees theirs — same template, personalised per login.
+TIP: `{litellm_virtual_key}` automatically resolves to each logged-in user's own key — no changes needed in your content.
 
-== Exercise 4: Enable Docling
+== User data variables
 
-Add document conversion support:
-
-[source,yaml]
-----
-# Enable Docling — adds granite-docling-258m to the key
-# and sets litellm_docling_endpoint in user data
-ocp4_workload_litellm_virtual_keys_include_docling: "{{ enable_docling | default(false) | bool }}"
-
-__meta__:
-  catalog:
-    parameters:
-      - name: enable_docling
-        formLabel: Document Conversion (Docling)
-        formGroup: Models
-        description: |
-          Enable Docling for PDF/DOCX to Markdown conversion.
-          Uses the /docling/v1alpha/convert/source endpoint.
-        openAPIV3Schema:
-          type: boolean
-          default: false
-----
-
-== Available user data variables
-
-These variables are stored in AgnosticD user data and injected into Showroom:
+These are injected as AsciiDoc attributes in your Showroom content.
+Always add `subs="attributes+"` to code blocks that use them.
 
 [cols="2,3",options="header"]
 |===
 |Variable |Value
 
 |`litellm_api_base_url`
-|Full `/v1` base URL (e.g., `https://litellm-prod.apps.../v1`)
+|Full `/v1` base URL
 
 |`litellm_virtual_key`
 |The `sk-...` virtual key
 
-|`litellm_available_models`
-|List of model names (array)
-
 |`litellm_available_models_list`
-|Comma-separated model names (string, for display)
+|Comma-separated model names (for display)
 
 |`litellm_key_duration`
 |Key validity (e.g., `7d`)
 
 |`litellm_tokenize_endpoint`
-|`/v1/tokenize` endpoint URL
+|`/v1/tokenize` URL
 
 |`litellm_embeddings_endpoint`
-|`/v1/embeddings` endpoint URL
+|`/v1/embeddings` URL
 
 |`litellm_docling_endpoint`
-|Docling endpoint URL — *only defined* when `include_docling: true`. Use `ifdef::litellm_docling_endpoint[]` to guard content.
+|Docling URL — *only defined* when `include_docling: true`
 
 |`litellm_docling_model`
 |Docling model name — only defined when docling is enabled
 |===
 
-== Per-model Showroom conditional flags
+== Showroom conditionals
 
-The role also stores per-model flags in user data — but *only when that model is in the key*.
-This means `ifdef::flag[]` correctly hides content when the model was not selected.
+Per-model flags are set *only when that model is in the key* — use `ifdef::` to show/hide content:
 
-[cols="2,3",options="header"]
+[cols="2,2",options="header"]
 |===
-|Attribute |Defined when...
+|Attribute |Model
 
 |`litellm_has_embeddings`
-|`nomic-embed-text-v1-5` is in the key
+|`nomic-embed-text-v1-5`
 
 |`litellm_has_codellama`
-|`codellama-7b-instruct` is in the key
+|`codellama-7b-instruct`
 
 |`litellm_has_llama_guard`
-|`Llama-Guard-3-1B` is in the key
+|`Llama-Guard-3-1B`
 
 |`litellm_has_deepseek`
-|`deepseek-r1-distill-qwen-14b` is in the key
+|`deepseek-r1-distill-qwen-14b`
 
 |`litellm_has_phi4`
-|`microsoft-phi-4` is in the key
+|`microsoft-phi-4`
 
 |`litellm_has_qwen3`
-|`qwen3-14b` is in the key
+|`qwen3-14b`
 
 |`litellm_has_gpt_oss`
-|`gpt-oss-120b` is in the key
+|`gpt-oss-120b`
 
 |`litellm_has_llama_scout`
-|`llama-scout-17b` is in the key
-|===
+|`llama-scout-17b`
 
-Use these in your `.adoc` files to show content only when relevant:
+|`litellm_docling_endpoint`
+|Docling (use this for docling guard)
+|===
 
 [source,asciidoc]
 ----
 \ifdef::litellm_has_embeddings[]
 == Embeddings Exercise
-
-[source,bash,subs="attributes+"]
- curl {litellm_api_base_url}/embeddings \
-   -H "Authorization: Bearer {litellm_virtual_key}" \
-   -d '{"model":"nomic-embed-text-v1-5","input":"Hello world"}'
-
+...
 \endif::litellm_has_embeddings[]
 
 \ifndef::litellm_has_embeddings[]
 NOTE: This module requires Nomic Embed v1.5, which is not enabled in your key.
 \endif::litellm_has_embeddings[]
-----
-
-== Using variables in Showroom AsciiDoc
-
-In your Showroom `.adoc` files, reference variables as attributes:
-
-[source,asciidoc]
-----
-Your API base URL: `{litellm_api_base_url}`
-
-Your virtual key: `{litellm_virtual_key}`
-
-Run this to test:
-
-[source,bash,subs="attributes+"]
- curl {litellm_api_base_url}/models \
-   -H "Authorization: Bearer {litellm_virtual_key}"
-----
-
-IMPORTANT: Always add `subs="attributes+"` to code blocks where you use `{variable}` substitution.
-
-== Conditional Docling content
-
-Use AsciiDoc conditionals to show Docling content only when the endpoint is available:
-
-[source,asciidoc]
-----
-\ifdef::litellm_docling_endpoint[]
-
-== Document Conversion
-
-Your key includes Docling access at `{litellm_docling_endpoint}`.
-
-\endif::litellm_docling_endpoint[]
 ----
 
 xref:99-conclusion.adoc[Next: Summary →]

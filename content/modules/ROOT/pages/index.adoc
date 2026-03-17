@@ -32,3 +32,7 @@ If you want to explore or deploy applications on OpenShift, use the embedded *OC
 * *Module 3* — xref:05-module-03-embeddings.adoc[Text Embeddings]
 * *Module 4* — xref:06-module-04-tokenize.adoc[Token Counting]
 * *Module 5* — xref:07-module-05-docling.adoc[Document Conversion (Docling)]
+
+== For Lab Authors
+
+* xref:08-module-06-agnosticv.adoc[AgnosticV Integration Guide] — how to add LiteMaaS virtual keys to your own catalog
