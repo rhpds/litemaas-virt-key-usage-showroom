@@ -12,8 +12,8 @@ If you want to explore or deploy applications on OpenShift, use the embedded *OC
 [%autowidth,cols="a,a"]
 |===
 | *Console URL* | link:{openshift_console_url}[{openshift_console_url},window=_blank]
-| *Username* | `kubeadmin`
-| *Password* | `{openshift_kubeadmin_password}`
+| *Username* | kubeadmin
+| *Password* | {openshift_kubeadmin_password}
 |===
 
 == LiteMaaS API Credentials
