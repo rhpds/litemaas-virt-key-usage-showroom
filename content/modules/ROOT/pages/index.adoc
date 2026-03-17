@@ -31,9 +31,9 @@ export LITELLM_API_KEY="{litellm_virtual_key}"
 
 == Modules
 
-* *Module 1* — xref:03-module-01-chat-curl.adoc[Chat with curl]
-* *Module 2* — xref:04-module-02-chat-python.adoc[Chat with Python]
-* *Module 3* — xref:06-module-04-tokenize.adoc[Token Counting]
+* xref:03-module-01-chat-curl.adoc[Chat with curl]
+* xref:04-module-02-chat-python.adoc[Chat with Python]
+* xref:06-module-04-tokenize.adoc[Tokenize]
 
 *Optional — only if enabled in your key:*
 

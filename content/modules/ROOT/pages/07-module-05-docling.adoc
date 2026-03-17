@@ -1,5 +1,5 @@
-= Module 5: Document Conversion with Docling
-:navtitle: Module 5: Document Conversion
+= Document Conversion with Docling
+:navtitle: Document Conversion
 
 ifdef::litellm_docling_endpoint[]
 

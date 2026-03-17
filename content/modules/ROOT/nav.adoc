@@ -4,9 +4,9 @@
 * xref:08-module-06-agnosticv.adoc[AgnosticV Integration Guide]
 
 .Using AI Models
-* xref:03-module-01-chat-curl.adoc[Module 1: Chat with curl]
-* xref:04-module-02-chat-python.adoc[Module 2: Chat with Python]
-* xref:06-module-04-tokenize.adoc[Module 3: Tokenize]
+* xref:03-module-01-chat-curl.adoc[Chat with curl]
+* xref:04-module-02-chat-python.adoc[Chat with Python]
+* xref:06-module-04-tokenize.adoc[Tokenize]
 
 * xref:99-conclusion.adoc[Summary & Next Steps]
 

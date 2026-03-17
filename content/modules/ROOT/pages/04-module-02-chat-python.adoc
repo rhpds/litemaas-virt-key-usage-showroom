@@ -1,5 +1,5 @@
-= Module 2: Chat Models with Python
-:navtitle: Module 2: Chat with Python
+= Chat with Python
+:navtitle: Chat with Python
 :source-highlighter: rouge
 
 The OpenAI Python SDK works directly with LiteMaaS — just point it at your API base URL.
@@ -143,4 +143,4 @@ print(response.content)
 
 ✓ Langchain correctly routes the request through LiteMaaS and returns a response.
 
-xref:05-module-03-embeddings.adoc[Next: Module 3 — Embeddings →]
+xref:05-module-03-embeddings.adoc[Next: Embeddings →]

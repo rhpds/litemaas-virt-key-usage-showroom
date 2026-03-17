@@ -1,5 +1,5 @@
-= Module 4: Token Counting
-:navtitle: Module 4: Tokenize
+= Token Counting
+:navtitle: Tokenize
 :source-highlighter: rouge
 
 The `/v1/tokenize` endpoint lets you count how many tokens your text will use *before* sending it to the model.
@@ -114,4 +114,4 @@ print(f"Prompt length: {len(safe_prompt)} chars")
 |5000-7500
 |===
 
-xref:07-module-05-docling.adoc[Next: Module 5 — Document Conversion →]
+xref:07-module-05-docling.adoc[Next: Document Conversion →]

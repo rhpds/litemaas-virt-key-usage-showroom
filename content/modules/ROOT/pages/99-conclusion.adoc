@@ -9,22 +9,22 @@ Congratulations! You have worked through all the RHDP MaaS usage examples.
 |===
 |Module |What you learned
 
-|Module 1 — curl chat
+|xref:03-module-01-chat-curl.adoc[Chat with curl]
 |Sending chat requests, streaming, multi-turn conversations
 
-|Module 2 — Python chat
+|xref:04-module-02-chat-python.adoc[Chat with Python]
 |OpenAI SDK, streaming, conversation loops, Langchain
 
-|Module 3 — Embeddings
+|xref:05-module-03-embeddings.adoc[Embeddings]
 |Generating vectors, cosine similarity, batch embedding
 
-|Module 4 — Tokenize
+|xref:06-module-04-tokenize.adoc[Tokenize]
 |Counting tokens before sending, truncating long inputs
 
-|Module 5 — Docling
+|xref:07-module-05-docling.adoc[Docling]
 |Converting PDFs to Markdown for RAG pipelines
 
-|Module 6 — AgnosticV
+|xref:08-module-06-agnosticv.adoc[AgnosticV Guide]
 |Wiring virtual keys into lab catalogs, Showroom attributes
 |===
 

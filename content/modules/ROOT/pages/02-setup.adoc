@@ -39,4 +39,4 @@ If you plan to use the Python examples:
 pip install openai langchain-openai requests
 ----
 
-xref:03-module-01-chat-curl.adoc[Next: Module 1 — Chat with curl →]
+xref:03-module-01-chat-curl.adoc[Next: Chat with curl →]

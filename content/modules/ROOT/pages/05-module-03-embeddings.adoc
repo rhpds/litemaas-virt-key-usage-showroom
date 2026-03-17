@@ -1,5 +1,5 @@
-= Module 3: Text Embeddings
-:navtitle: Module 3: Embeddings
+= Text Embeddings
+:navtitle: Embeddings
 :source-highlighter: rouge
 
 Embeddings convert text into dense numeric vectors that capture semantic meaning.
@@ -129,4 +129,4 @@ for i, item in enumerate(response.data):
     print(f"Text {i}: {len(item.embedding)} dimensions")
 ----
 
-xref:06-module-04-tokenize.adoc[Next: Module 4 — Tokenize →]
+xref:06-module-04-tokenize.adoc[Next: Tokenize →]
