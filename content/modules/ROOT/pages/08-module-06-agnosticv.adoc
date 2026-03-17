@@ -86,37 +86,6 @@ Available model names on production LiteMaaS:
 |Docling (use `include_docling: true`)
 |===
 
-== Enable Docling
-
-Set `ocp4_workload_litellm_virtual_keys_include_docling: true` in your catalog to add Docling support.
-
-When enabled, the role adds `granite-docling-258m` to the key and stores two additional user data variables:
-
-* `{litellm_docling_endpoint}` — the `/docling/v1alpha/convert/source` endpoint URL
-* `{litellm_docling_model}` — `granite-docling-258m`
-
-For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].
-
-== Multi-user workshops
-
-[source,yaml]
-----
-__meta__:
-  catalog:
-    multiuser: true
-    parameters:
-      - name: num_users
-        formLabel: Number of Users
-        formGroup: Lab Configuration
-        openAPIV3Schema:
-          type: integer
-          default: 1
-          minimum: 1
-          maximum: 30
-----
-
-TIP: `{litellm_virtual_key}` automatically resolves to each logged-in user's own key — no changes needed in your content.
-
 == User data variables
 
 The role stores these variables in AgnosticD user data. Showroom injects them as AsciiDoc attributes — use `{variable}` in your content and add `subs="attributes+"` to source blocks.
@@ -191,6 +160,37 @@ my_workload_docling_model:        "{{ lookup('agnosticd_user_data', 'litellm_doc
 ----
 
 TIP: The `ocp4_workload_litellm_virtual_keys` workload must run *before* the workload that does the lookup, so the data is available.
+
+== Enable Docling
+
+Set `ocp4_workload_litellm_virtual_keys_include_docling: true` in your catalog to add Docling support.
+
+When enabled, the role adds `granite-docling-258m` to the key and stores two additional user data variables:
+
+* `{litellm_docling_endpoint}` — the `/docling/v1alpha/convert/source` endpoint URL
+* `{litellm_docling_model}` — `granite-docling-258m`
+
+For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].
+
+== Multi-user workshops
+
+[source,yaml]
+----
+__meta__:
+  catalog:
+    multiuser: true
+    parameters:
+      - name: num_users
+        formLabel: Number of Users
+        formGroup: Lab Configuration
+        openAPIV3Schema:
+          type: integer
+          default: 1
+          minimum: 1
+          maximum: 30
+----
+
+TIP: `{litellm_virtual_key}` automatically resolves to each logged-in user's own key — no changes needed in your content.
 
 == Optional — model checkboxes in order form
 
