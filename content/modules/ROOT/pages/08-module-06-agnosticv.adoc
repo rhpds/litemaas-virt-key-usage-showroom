@@ -178,4 +178,4 @@ __meta__:
       # repeat for each model...
 ----
 
-xref:99-conclusion.adoc[Next: Summary →]
+If you want to see how it works from a user perspective, continue to xref:03-module-01-chat-curl.adoc[Module 1: Chat with curl →]
