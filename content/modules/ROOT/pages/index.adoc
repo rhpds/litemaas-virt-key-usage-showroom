@@ -21,6 +21,14 @@ Use the embedded *OCP Console* tab on the right and log in with:
 | *Available Models* | `{litellm_available_models_list}`
 |===
 
+Run this in the terminal to set your environment variables — all module examples use them:
+
+[source,bash,subs="attributes+"]
+----
+export LITELLM_API_BASE="{litellm_api_base_url}"
+export LITELLM_API_KEY="{litellm_virtual_key}"
+----
+
 == Modules
 
 * *Module 1* — xref:03-module-01-chat-curl.adoc[Chat with curl]
