@@ -8,10 +8,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,15 +29,23 @@ jobs:
           node-version: '20'
 
       - name: Install Antora
-        run: |
-          npm install -g @antora/cli@3.1 @antora/site-generator@3.1 @sntke/antora-mermaid-extension
+        run: npm install -g @antora/cli@3.1 @antora/site-generator@3.1 @sntke/antora-mermaid-extension
 
       - name: Build Antora site
         run: antora --fetch site.yml
 
-      - name: Publish to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./www
-          publish_branch: gh-pages
+          path: ./www
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
