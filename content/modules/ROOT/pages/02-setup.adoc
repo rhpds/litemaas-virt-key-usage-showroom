@@ -25,6 +25,7 @@ curl $LITELLM_API_BASE/models \
 
 Expected output — the models your key can access:
 
+[subs="attributes+"]
 ----
 {litellm_available_models_list}
 ----
