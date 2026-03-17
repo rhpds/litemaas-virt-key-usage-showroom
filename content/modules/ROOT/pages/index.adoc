@@ -3,20 +3,9 @@
 
 Welcome! This guide shows you how to use the Red Hat Demo Platform Model-as-a-Service (RHDP MaaS) — your access point to production AI models running on OpenShift AI.
 
-Your virtual key gives you an OpenAI-compatible API endpoint backed by real GPU-hosted models. Whether you're building a RAG pipeline, experimenting with embeddings, or calling a chat model from a lab, this guide has working examples in curl, Python, and AgnosticV.
-
-== What you'll learn
-
-* How to authenticate and list available models
-* How to call chat models with curl and Python
-* How to generate text embeddings for semantic search and RAG
-* How to count tokens before sending a request
-* How to convert documents to Markdown using Docling (if enabled)
-* How to wire LiteMaaS virtual keys into an AgnosticV catalog
+Your virtual key gives you an OpenAI-compatible API endpoint backed by real GPU-hosted models.
 
 == Your credentials
-
-Look in the sidebar panel for your credentials. You will use these in every example throughout this lab.
 
 [%autowidth,cols="a,a"]
 |===
@@ -25,8 +14,10 @@ Look in the sidebar panel for your credentials. You will use these in every exam
 | *Available Models* | `{litellm_available_models_list}`
 |===
 
-IMPORTANT: Keep your virtual key secure. Do not share it.
+== Modules
 
-== Let's get started
-
-Start with xref:01-overview.adoc[What is RHDP MaaS?] to understand the platform, then work through the modules in order.
+* *Module 1* — xref:03-module-01-chat-curl.adoc[Chat with curl]
+* *Module 2* — xref:04-module-02-chat-python.adoc[Chat with Python]
+* *Module 3* — xref:05-module-03-embeddings.adoc[Text Embeddings]
+* *Module 4* — xref:06-module-04-tokenize.adoc[Token Counting]
+* *Module 5* — xref:07-module-05-docling.adoc[Document Conversion (Docling)]

@@ -3,10 +3,6 @@
 .For Lab Authors
 * xref:08-module-06-agnosticv.adoc[AgnosticV Integration Guide]
 
-.Getting Started
-* xref:01-overview.adoc[What is RHDP MaaS?]
-* xref:02-setup.adoc[Your Credentials]
-
 .Using AI Models
 * xref:03-module-01-chat-curl.adoc[Module 1: Chat with curl]
 * xref:04-module-02-chat-python.adoc[Module 2: Chat with Python]
