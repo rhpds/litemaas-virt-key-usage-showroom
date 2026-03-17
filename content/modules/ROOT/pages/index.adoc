@@ -8,8 +8,8 @@ Use the embedded *OCP Console* tab on the right and log in with:
 [%autowidth,cols="a,a"]
 |===
 | *Console URL* | link:{openshift_console_url}[{openshift_console_url},window=_blank]
-| *Username* | kubeadmin
-| *Password* | {openshift_kubeadmin_password}
+| *Username* | {openshift_cluster_admin_username}
+| *Password* | {openshift_cluster_admin_password}
 |===
 
 == LiteMaaS API Credentials
