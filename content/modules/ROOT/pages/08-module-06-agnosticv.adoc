@@ -95,7 +95,7 @@ When enabled, the role adds `granite-docling-258m` to the key and stores two add
 * `{litellm_docling_endpoint}` — the `/docling/v1alpha/convert/source` endpoint URL
 * `{litellm_docling_model}` — `granite-docling-258m`
 
-Use `ifdef::litellm_docling_endpoint[]` in your `.adoc` files to guard Docling content — the attribute is only defined when Docling is enabled.
+Use `ifdef::litellm_docling_endpoint[]` in your `.adoc` files to guard Docling content — the variable is only set when Docling is enabled, so the guard works automatically.
 
 For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].
 
@@ -177,6 +177,20 @@ models = client.models.list()
 for m in models.data:
     print(m.id)
 ----
+
+== Using user data in other workloads
+
+If your catalog has workloads that run *after* the virtual key role, they can read the credentials directly using `lookup('agnosticd_user_data', ...)`:
+
+[source,yaml]
+----
+# Pass LiteMaaS credentials to another workload
+my_workload_litellm_api_url: "{{ lookup('agnosticd_user_data', 'litellm_api_base_url') | default('') }}"
+my_workload_litellm_api_key: "{{ lookup('agnosticd_user_data', 'litellm_virtual_key') | default('') }}"
+my_workload_litellm_models:  "{{ lookup('agnosticd_user_data', 'litellm_available_models') | default([]) }}"
+----
+
+TIP: The `ocp4_workload_litellm_virtual_keys` workload must run *before* the workload that does the lookup, so the data is available.
 
 == Optional — model checkboxes in order form
 
