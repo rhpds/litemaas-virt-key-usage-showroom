@@ -167,7 +167,7 @@ Set `ocp4_workload_litellm_virtual_keys_include_docling: true` in your catalog t
 
 When enabled, the role adds `granite-docling-258m` to the key and stores two additional user data variables:
 
-* `{litellm_docling_endpoint}` — the `/docling/v1alpha/convert/source` endpoint URL
+* `{litellm_docling_endpoint}` — the `/docling/v1alpha1/convert/source` endpoint URL
 * `{litellm_docling_model}` — `granite-docling-258m`
 
 For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].

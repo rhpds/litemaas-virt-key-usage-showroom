@@ -30,7 +30,7 @@ curl -X POST {litellm_docling_endpoint} \
   -H "Authorization: Bearer {litellm_virtual_key}" \
   -d '{
     "model": "{litellm_docling_model}",
-    "http_sources": [{"url": "https://arxiv.org/pdf/2408.09869"}]
+    "sources": [{"kind": "http", "url": "https://arxiv.org/pdf/2408.09869"}]
   }'
 ----
 
@@ -47,7 +47,7 @@ curl -X POST {litellm_docling_endpoint} \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer {litellm_virtual_key}" \
   -s \
-  -d '{"model":"{litellm_docling_model}","http_sources":[{"url":"https://arxiv.org/pdf/2408.09869"}]}' | \
+  -d '{"model":"{litellm_docling_model}","sources":[{"kind":"http","url":"https://arxiv.org/pdf/2408.09869"}]}' | \
   python3 -c "import sys,json; d=json.load(sys.stdin); print(d['document']['md_content'][:500])"
 ----
 
@@ -74,7 +74,7 @@ def convert_pdf(url):
         headers={"Authorization": f"Bearer {API_KEY}"},
         json={
             "model": MODEL,
-            "http_sources": [{"url": url}]
+            "sources": [{"kind": "http", "url": url}]
         },
         timeout=120  # Docling can take time for large PDFs
     )
