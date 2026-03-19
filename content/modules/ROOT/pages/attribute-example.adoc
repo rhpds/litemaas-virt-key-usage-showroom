@@ -22,8 +22,8 @@ The values shown below are resolved from `site.yml` attributes during local deve
 |`bastion_ssh_password`
 |{bastion_ssh_password}
 
-|`openshift_console_url`
-|{openshift_console_url}
+|`openshift_cluster_console_url`
+|{openshift_cluster_console_url}
 
 |`openshift_cluster_ingress_domain`
 |{openshift_cluster_ingress_domain}
@@ -49,7 +49,7 @@ Password: `{bastion_ssh_password}`
 
 Visit the console at:
 
-{openshift_console_url}
+{openshift_cluster_console_url}
 
 === curl an App on the Cluster
 

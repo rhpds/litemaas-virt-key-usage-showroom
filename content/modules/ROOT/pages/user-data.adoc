@@ -16,7 +16,7 @@ Infrastructure roles          Showroom role              Content repo
                                │                          attributes
    bastion_public_hostname     │
    keycloak_admin_user         │                       4. Available as
-   openshift_console_url       │                          {bastion_public_hostname}
+   openshift_cluster_console_url       │                          {bastion_public_hostname}
    ...                         │                          {keycloak_admin_user}
                                │                          in your AsciiDoc
 ----
@@ -76,7 +76,7 @@ All `user_data` is global. Every key written by infrastructure roles is availabl
 ----
 # user_data (flat)
 bastion_public_hostname: bastion.abc123.example.com
-openshift_console_url: https://console.apps.cluster.example.com
+openshift_cluster_console_url: https://console.apps.cluster.example.com
 keycloak_admin_user: admin
 ----
 
@@ -87,7 +87,7 @@ In multi-user workshops, `user_data` contains both global keys and a `users` map
 [source,yaml]
 ----
 # user_data (multi-user)
-openshift_console_url: https://console.apps.cluster.example.com   # global
+openshift_cluster_console_url: https://console.apps.cluster.example.com   # global
 keycloak_admin_user: admin                                        # global
 users:
   user1:
@@ -104,7 +104,7 @@ For `user1`, the effective attributes are:
 
 [source,yaml]
 ----
-openshift_console_url: https://console.apps.cluster.example.com
+openshift_cluster_console_url: https://console.apps.cluster.example.com
 keycloak_admin_user: admin
 bastion_ssh_password: password1
 some_credential: value1
@@ -133,7 +133,7 @@ workloads:
   - agnosticd.showroom.ocp4_workload_showroom
 
 ocp4_workload_showroom_user_data_seed:
-  openshift_console_url: https://console.apps.cluster.example.com
+  openshift_cluster_console_url: https://console.apps.cluster.example.com
   users:
     user1:
       password: generated-password-1
@@ -156,7 +156,7 @@ asciidoc:
     bastion_public_hostname: bastion.example.com
     bastion_ssh_user_name: lab-user
     bastion_ssh_password: changeme
-    openshift_console_url: https://console.apps.example.com
+    openshift_cluster_console_url: https://console.apps.example.com
 ----
 
 TIP: If an attribute is referenced in your AsciiDoc but has no default and is not present in `user_data`, the raw `\{attribute_name}` text will appear in the rendered output. Always provide defaults.
@@ -181,7 +181,7 @@ These attributes are commonly available in `user_data` depending on your environ
 |`bastion_ssh_password`
 |Set by the `bastion` role or propagated.
 
-|`openshift_console_url`
+|`openshift_cluster_console_url`
 |Set by OpenShift provisioning roles.
 
 |`openshift_cluster_ingress_domain`

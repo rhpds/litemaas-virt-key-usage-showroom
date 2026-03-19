@@ -7,7 +7,7 @@ Use the embedded *OCP Console* tab on the right and log in with:
 
 [%autowidth,cols="a,a"]
 |===
-| *Console URL* | link:{openshift_console_url}[{openshift_console_url},window=_blank]
+| *Console URL* | link:{openshift_cluster_console_url}[{openshift_cluster_console_url},window=_blank]
 | *Username* | {openshift_cluster_admin_username}
 | *Password* | {openshift_cluster_admin_password}
 |===
