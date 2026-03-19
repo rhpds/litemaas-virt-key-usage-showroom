@@ -20,26 +20,5 @@ antora:
   extensions:
     - '@sntke/antora-mermaid-extension'
 
-asciidoc:
-  attributes:
-    experimental: true
-    page-pagination: true
-    showroom-collection-version: v1.5.6
-    guid: abc123
-    bastion_public_hostname: bastion.abc123.ocpv00.rhdp.net
-    bastion_ssh_user_name: lab-user
-    bastion_ssh_password: password
-    ssh_user: lab-user
-    openshift_console_url: https://console-openshift-console.apps.cluster-abc123.ocpv00.rhdp.net
-    openshift_cluster_ingress_domain: apps.cluster-abc123.ocpv00.rhdp.net
-    openshift_cluster_admin_username: admin
-    openshift_cluster_admin_password: your-password
-    litellm_api_base_url: https://litellm-prod.apps.maas.redhatworkshops.io/v1
-    litellm_virtual_key: sk-your-virtual-key
-    litellm_available_models_list: granite-3-2-8b-instruct, nomic-embed-text-v1-5
-    litellm_key_duration: 7d
-    litellm_docling_endpoint: https://litellm-prod.apps.maas.redhatworkshops.io/docling/v1/convert/source
-    litellm_docling_model: granite-docling-258m
-
 output:
   dir: ./www
