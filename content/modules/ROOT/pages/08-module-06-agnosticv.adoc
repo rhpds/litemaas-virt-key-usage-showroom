@@ -67,6 +67,9 @@ Available model names on production LiteMaaS:
 |`gpt-oss-120b`
 |Chat, large
 
+|`gpt-oss-20b`
+|Chat, cost-effective
+
 |`microsoft-phi-4`
 |Chat, compact
 
@@ -85,6 +88,8 @@ Available model names on production LiteMaaS:
 |`granite-docling-258m`
 |Docling (use `include_docling: true`)
 |===
+
+NOTE: Additional models available via *Google Vertex AI* — `minimax-m2`, `qwen3-235b`, `gpt-oss-120b`, `gpt-oss-20b`. These are external pay-per-token models suited for Agentic and MCP workloads. Use the same model name in your catalog.
 
 == User data variables
 
