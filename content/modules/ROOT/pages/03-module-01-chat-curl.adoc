@@ -12,7 +12,19 @@ By the end of this module, you'll be able to:
 * Stream a response token by token
 * Send a multi-turn conversation with message history
 
-TIP: Examples use `granite-3-2-8b-instruct` as the default. Swap the `model` field with any chat model in your key: `{litellm_available_models_list}`
+**Before you start — make sure your environment variables are set:**
+
+[source,bash,subs="attributes+"]
+----
+export LITELLM_API_BASE="{litellm_api_base_url}"
+export LITELLM_API_KEY="{litellm_virtual_key}"
+----
+
+== Step 1: Choose your model
+
+Your key has access to: `{litellm_available_models_list}`
+
+Swap the `model` field in any example below to use a different model from your key.
 
 == Exercise 1: Basic chat completion
 
@@ -26,9 +38,9 @@ curl $LITELLM_API_BASE/chat/completions \
   -d '{
     "model": "granite-3-2-8b-instruct",
     "messages": [
-      {"role": "user", "content": "What is Red Hat OpenShift in one sentence?"}
+      {"role": "user", "content": "What is Red Hat OpenShift?"}
     ],
-    "max_tokens": 100
+    "max_tokens": 1000
   }'
 ----
 
@@ -44,8 +56,8 @@ curl $LITELLM_API_BASE/chat/completions \
   -s \
   -d '{
     "model": "granite-3-2-8b-instruct",
-    "messages": [{"role": "user", "content": "What is Red Hat OpenShift in one sentence?"}],
-    "max_tokens": 100
+    "messages": [{"role": "user", "content": "What is Red Hat OpenShift?"}],
+    "max_tokens": 1000
   }' | python3 -c "import sys,json; print(json.load(sys.stdin)['choices'][0]['message']['content'])"
 ----
 
