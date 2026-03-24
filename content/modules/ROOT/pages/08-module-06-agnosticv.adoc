@@ -220,7 +220,7 @@ When enabled, the role adds `granite-docling-258m` to the key and stores two add
 * `{litellm_docling_endpoint}` — the `/docling/v1/convert/source` endpoint URL
 * `{litellm_docling_model}` — `granite-docling-258m`
 
-For curl and Python usage examples, see xref:07-module-05-docling.adoc[Module 5: Document Conversion].
+For curl and Python usage examples, see xref:04-docling.adoc[Module 4: Document Conversion].
 
 == Multi-user workshops
 
@@ -267,4 +267,4 @@ __meta__:
       # repeat for each model...
 ----
 
-If you want to see how it works from a user perspective, continue to xref:03-module-01-chat-curl.adoc[Module 1: Chat with curl →]
+If you want to see how it works from a user perspective, continue to xref:01-chat.adoc[Module 1: Chat with AI Models →]

@@ -1,15 +1,15 @@
-* xref:index.adoc[RHDP MaaS — AI Model Access]
+* xref:index.adoc[Welcome]
+
+.Getting Started
+* xref:00-setup.adoc[Setup & Credentials]
+
+.Workshop Modules
+* xref:01-chat.adoc[Module 1: Chat with AI Models]
+* xref:02-embeddings.adoc[Module 2: Text Embeddings]
+* xref:03-tokenize.adoc[Module 3: Token Counting]
+* xref:04-docling.adoc[Module 4: Document Conversion]
+
+* xref:99-conclusion.adoc[Summary]
 
 .For Lab Authors
 * xref:08-module-06-agnosticv.adoc[AgnosticV Integration Guide]
-
-.Using AI Models
-* xref:03-module-01-chat-curl.adoc[Chat with curl]
-* xref:04-module-02-chat-python.adoc[Chat with Python]
-* xref:06-module-04-tokenize.adoc[Tokenize]
-
-* xref:99-conclusion.adoc[Summary & Next Steps]
-
-.Optional Models
-* xref:05-module-03-embeddings.adoc[Embeddings (Nomic Embed)]
-* xref:07-module-05-docling.adoc[Document Conversion (Docling)]

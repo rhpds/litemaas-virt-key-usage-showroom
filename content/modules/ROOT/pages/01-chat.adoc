@@ -1,0 +1,278 @@
+= Module 1: Chat with AI Models
+:navtitle: Module 1: Chat
+:source-highlighter: rouge
+
+The LiteMaaS API is fully OpenAI-compatible. Every call uses the same format as the OpenAI API — so any existing OpenAI example you find will work here by changing the base URL and key.
+
+== Learning objectives
+
+By the end of this module, you'll be able to:
+
+* Send a chat completion request with curl
+* Stream a response token by token
+* Send a multi-turn conversation with message history
+* Use the OpenAI Python SDK with LiteMaaS
+* Integrate with Langchain
+
+TIP: Examples use `granite-3-2-8b-instruct` as the default. Swap the `model` field with any chat model in your key: `{litellm_available_models_list}`
+
+== Using curl
+
+=== Step 1: Choose your model
+
+Your key has access to: `{litellm_available_models_list}`
+
+Swap the `model` field in any example below to use a different model from your key.
+
+NOTE: If you are testing *Gemini 2.5 Pro*, always set `max_tokens` to at least *1000*. It is a thinking model that uses reasoning tokens before generating output — low token limits will return an empty response.
+
+[source,bash,subs="attributes+"]
+----
+curl $LITELLM_API_BASE/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -d '{
+    "model": "gemini-2.5-pro",
+    "messages": [{"role": "user", "content": "What is Red Hat OpenShift?"}],
+    "max_tokens": 1000
+  }'
+----
+
+=== Exercise 1: Basic chat completion
+
+Send your first request to a chat model.
+
+[source,bash,subs="attributes+"]
+----
+curl $LITELLM_API_BASE/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -d '{
+    "model": "granite-3-2-8b-instruct",
+    "messages": [
+      {"role": "user", "content": "What is Red Hat OpenShift?"}
+    ],
+    "max_tokens": 1000
+  }'
+----
+
+The response contains the model's reply in `choices[0].message.content`.
+
+To extract just the text:
+
+[source,bash]
+----
+curl $LITELLM_API_BASE/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -s \
+  -d '{
+    "model": "granite-3-2-8b-instruct",
+    "messages": [{"role": "user", "content": "What is Red Hat OpenShift?"}],
+    "max_tokens": 1000
+  }' | python3 -c "import sys,json; print(json.load(sys.stdin)['choices'][0]['message']['content'])"
+----
+
+==== Verify
+
+✓ You receive a text response about OpenShift.
+
+=== Exercise 2: Streaming responses
+
+Add `"stream": true` to receive tokens as they are generated rather than waiting for the full response.
+
+[source,bash]
+----
+curl $LITELLM_API_BASE/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -d '{
+    "model": "granite-3-2-8b-instruct",
+    "messages": [{"role": "user", "content": "List 5 benefits of containers"}],
+    "stream": true
+  }'
+----
+
+You will see `data: {...}` lines arriving one by one as the model generates each token.
+
+==== Verify
+
+✓ You see output appearing progressively, not all at once.
+
+=== Exercise 3: Multi-turn conversation
+
+Pass previous messages in the `messages` array to give the model conversation history.
+
+[source,bash]
+----
+curl $LITELLM_API_BASE/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -d '{
+    "model": "granite-3-2-8b-instruct",
+    "messages": [
+      {"role": "user", "content": "What is Kubernetes?"},
+      {"role": "assistant", "content": "Kubernetes is an open-source container orchestration platform that automates deployment, scaling, and management of containerized applications."},
+      {"role": "user", "content": "How does OpenShift build on top of that?"}
+    ],
+    "max_tokens": 200
+  }'
+----
+
+The model sees the full conversation and responds in context.
+
+==== Verify
+
+✓ The response references Kubernetes and explains what OpenShift adds to it.
+
+=== System prompt
+
+Use the `system` role to set instructions that apply to the whole conversation:
+
+[source,bash]
+----
+curl $LITELLM_API_BASE/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -d '{
+    "model": "granite-3-2-8b-instruct",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant that answers in exactly 2 bullet points."},
+      {"role": "user", "content": "What are the main benefits of GitOps?"}
+    ]
+  }'
+----
+
+== Using the Python SDK
+
+The OpenAI Python SDK works directly with LiteMaaS — just point it at your API base URL.
+No new SDK to install.
+
+=== Exercise 1: Basic chat with the OpenAI SDK
+
+[source,python,subs="attributes+"]
+----
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="{litellm_api_base_url}",
+    api_key="{litellm_virtual_key}"
+)
+
+response = client.chat.completions.create(
+    model="granite-3-2-8b-instruct",
+    messages=[
+        {"role": "user", "content": "What is Red Hat OpenShift in one sentence?"}
+    ],
+    max_tokens=100
+)
+
+print(response.choices[0].message.content)
+----
+
+Run it:
+
+[source,bash]
+----
+python3 chat_basic.py
+----
+
+==== Verify
+
+✓ You see a one-sentence description of OpenShift printed to the terminal.
+
+=== Exercise 2: Streaming
+
+[source,python,subs="attributes+"]
+----
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="{litellm_api_base_url}",
+    api_key="{litellm_virtual_key}"
+)
+
+stream = client.chat.completions.create(
+    model="granite-3-2-8b-instruct",
+    messages=[{"role": "user", "content": "Explain containers in 3 sentences"}],
+    stream=True
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="", flush=True)
+print()
+----
+
+==== Verify
+
+✓ Text appears progressively, token by token.
+
+=== Exercise 3: Multi-turn conversation loop
+
+[source,python,subs="attributes+"]
+----
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="{litellm_api_base_url}",
+    api_key="{litellm_virtual_key}"
+)
+
+messages = [
+    {"role": "system", "content": "You are a concise Red Hat technical assistant."}
+]
+
+print("Chat with the AI (type 'quit' to exit)\n")
+
+while True:
+    user_input = input("You: ").strip()
+    if user_input.lower() == "quit":
+        break
+
+    messages.append({"role": "user", "content": user_input})
+
+    response = client.chat.completions.create(
+        model="granite-3-2-8b-instruct",
+        messages=messages,
+        max_tokens=300
+    )
+
+    reply = response.choices[0].message.content
+    messages.append({"role": "assistant", "content": reply})
+    print(f"AI: {reply}\n")
+----
+
+==== Verify
+
+✓ The assistant maintains context across multiple turns.
+
+=== Exercise 4: Langchain integration
+
+[source,python,subs="attributes+"]
+----
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
+
+llm = ChatOpenAI(
+    model="granite-3-2-8b-instruct",
+    openai_api_base="{litellm_api_base_url}",
+    openai_api_key="{litellm_virtual_key}",
+    max_tokens=200
+)
+
+messages = [
+    SystemMessage(content="You are a helpful Red Hat technical assistant."),
+    HumanMessage(content="What is the difference between a pod and a deployment in Kubernetes?")
+]
+
+response = llm.invoke(messages)
+print(response.content)
+----
+
+==== Verify
+
+✓ Langchain correctly routes the request through LiteMaaS and returns a response.
+
+xref:02-embeddings.adoc[Next: Module 2 — Text Embeddings →]

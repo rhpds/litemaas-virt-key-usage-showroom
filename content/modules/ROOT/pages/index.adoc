@@ -1,45 +1,13 @@
-= RHDP MaaS — Using AI Models
-:navtitle: RHDP MaaS — AI Model Access
+= Welcome to RHDP MaaS
+:navtitle: Welcome
 
-== OpenShift Console
+RHDP Model-as-a-Service (MaaS) gives you access to production AI models through a single OpenAI-compatible API. Your virtual key is scoped to the models you need — no infrastructure to manage.
 
-Use the embedded *OCP Console* tab on the right and log in with:
+== What you'll learn
 
-[%autowidth,cols="a,a"]
-|===
-| *Console URL* | link:{openshift_cluster_console_url}[{openshift_cluster_console_url},window=_blank]
-| *Username* | {openshift_cluster_admin_username}
-| *Password* | {openshift_cluster_admin_password}
-|===
+* Call AI models with curl and Python
+* Use embeddings for semantic search
+* Count tokens before sending requests
+* Convert documents to Markdown with Docling
 
-== LiteMaaS API Credentials
-
-[%autowidth,cols="a,a"]
-|===
-| *API Base URL* | `{litellm_api_base_url}`
-| *Virtual Key* | `{litellm_virtual_key}`
-| *Available Models* | `{litellm_available_models_list}`
-|===
-
-Run this in the terminal to set your environment variables — all module examples use them:
-
-[source,bash,subs="attributes+"]
-----
-export LITELLM_API_BASE="{litellm_api_base_url}"
-export LITELLM_API_KEY="{litellm_virtual_key}"
-----
-
-== Modules
-
-* xref:03-module-01-chat-curl.adoc[Chat with curl]
-* xref:04-module-02-chat-python.adoc[Chat with Python]
-* xref:06-module-04-tokenize.adoc[Tokenize]
-
-*Optional — only if enabled in your key:*
-
-* xref:05-module-03-embeddings.adoc[Embeddings] — requires `nomic-embed-text-v1-5`
-* xref:07-module-05-docling.adoc[Document Conversion (Docling)] — requires `include_docling: true`
-
-== For Lab Authors
-
-* xref:08-module-06-agnosticv.adoc[AgnosticV Integration Guide] — how to add LiteMaaS virtual keys to your own catalog
+xref:00-setup.adoc[Get started — set up your environment →]

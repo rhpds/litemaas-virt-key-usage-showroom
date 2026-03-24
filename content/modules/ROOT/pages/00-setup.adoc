@@ -1,0 +1,52 @@
+= Setup & Credentials
+:navtitle: Setup & Credentials
+
+== OpenShift Console
+
+Use the *OCP Console* tab on the right to access the cluster:
+
+[%autowidth,cols="a,a"]
+|===
+| *Console URL* | link:{openshift_cluster_console_url}[{openshift_cluster_console_url},window=_blank]
+| *Username* | {openshift_cluster_admin_username}
+| *Password* | {openshift_cluster_admin_password}
+|===
+
+== LiteMaaS API Credentials
+
+[%autowidth,cols="a,a"]
+|===
+| *API Base URL* | `{litellm_api_base_url}`
+| *Virtual Key* | `{litellm_virtual_key}`
+| *Available Models* | `{litellm_available_models_list}`
+|===
+
+== Set environment variables
+
+**Run this in the Terminal tab to set up your session — all module examples use these variables:**
+
+[source,bash,subs="attributes+"]
+----
+export LITELLM_API_BASE="{litellm_api_base_url}"
+export LITELLM_API_KEY="{litellm_virtual_key}"
+----
+
+== Verify your connection
+
+[source,bash]
+----
+curl $LITELLM_API_BASE/models \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -s | python3 -c "import sys,json; [print(m['id']) for m in json.load(sys.stdin)['data']]"
+----
+
+Expected output — the models your key has access to:
+
+[subs="attributes+"]
+----
+{litellm_available_models_list}
+----
+
+NOTE: If your key includes *Gemini 2.5 Pro*, always set `max_tokens` to at least *1000* — it is a thinking model that uses reasoning tokens before generating output.
+
+xref:01-chat.adoc[Next: Module 1 — Chat with AI Models →]
