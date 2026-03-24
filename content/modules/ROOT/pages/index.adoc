@@ -1,13 +1,31 @@
 = Welcome to RHDP MaaS
 :navtitle: Welcome
 
-RHDP Model-as-a-Service (MaaS) gives you access to production AI models through a single OpenAI-compatible API. Your virtual key is scoped to the models you need — no infrastructure to manage.
+RHDP Model-as-a-Service (MaaS) gives you access to production AI models running on OpenShift AI — through a single OpenAI-compatible API.
+Your virtual key is scoped to the models you selected at order time.
+No infrastructure to manage, no separate accounts.
 
-== What you'll learn
+== What you will learn
 
-* Call AI models with curl and Python
-* Use embeddings for semantic search
-* Count tokens before sending requests
-* Convert documents to Markdown with Docling
+In this workshop you will:
 
-xref:00-setup.adoc[Get started — set up your environment →]
+* Call AI models with curl and the OpenAI Python SDK
+* Use text embeddings for semantic search and RAG pipelines
+* Count tokens before sending requests to estimate cost and context usage
+* Convert PDFs and documents to Markdown with Docling
+
+== Who this is for
+
+This workshop is designed for developers and platform engineers who want to use AI models in demos, workshops, and agentic workflows running on RHDP infrastructure.
+
+== Your environment
+
+Your lab includes:
+
+* An OpenShift SNO cluster with a terminal available in the *Terminal* tab
+* A LiteMaaS virtual key scoped to your selected models — visible in the *Setup & Credentials* section
+* The OpenShift Console embedded in the *OCP Console* tab
+
+== Get started
+
+xref:00-setup.adoc[Set up your environment →]
