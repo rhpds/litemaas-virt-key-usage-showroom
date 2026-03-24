@@ -2,6 +2,8 @@
 :navtitle: Module 2: Embeddings
 :source-highlighter: rouge
 
+IMPORTANT: Before running any command in this module, make sure `LITELLM_API_BASE` and `LITELLM_API_KEY` are set in your terminal. If not, go to xref:00-setup.adoc[Setup and Credentials] and complete Step 2.
+
 Embeddings convert text into dense numeric vectors that capture semantic meaning.
 Two pieces of text that mean similar things will have vectors that are close together — even if they use different words.
 This is the foundation of semantic search, RAG (Retrieval-Augmented Generation), and clustering.

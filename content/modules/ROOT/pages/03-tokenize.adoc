@@ -2,6 +2,8 @@
 :navtitle: Module 3: Tokenize
 :source-highlighter: rouge
 
+IMPORTANT: Before running any command in this module, make sure `LITELLM_API_BASE` and `LITELLM_API_KEY` are set in your terminal. If not, go to xref:00-setup.adoc[Setup and Credentials] and complete Step 2.
+
 The `/v1/tokenize` endpoint lets you count how many tokens your text will use *before* sending it to the model.
 This is useful for estimating cost, checking whether your input fits within the model's context window, and deciding whether to truncate long documents.
 

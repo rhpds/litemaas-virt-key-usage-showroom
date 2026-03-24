@@ -4,6 +4,14 @@
 
 The LiteMaaS API is fully OpenAI-compatible. Every call uses the same format as the OpenAI API — so any existing OpenAI example you find will work here by changing the base URL and key.
 
+IMPORTANT: Before running any command in this module, make sure you have set your environment variables in the terminal. If you have not done this yet, go back to xref:00-setup.adoc[Setup and Credentials] and complete Step 2.
+
+[source,bash,subs="attributes+"]
+----
+export LITELLM_API_BASE="{litellm_api_base_url}"
+export LITELLM_API_KEY="{litellm_virtual_key}"
+----
+
 == Learning objectives
 
 By the end of this module, you'll be able to:

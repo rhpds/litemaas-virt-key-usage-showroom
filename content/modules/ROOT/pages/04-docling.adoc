@@ -3,6 +3,8 @@
 
 ifdef::litellm_docling_endpoint[]
 
+IMPORTANT: Before running any command in this module, make sure `LITELLM_API_BASE` and `LITELLM_API_KEY` are set in your terminal. If not, go to xref:00-setup.adoc[Setup and Credentials] and complete Step 2.
+
 Docling converts PDFs, DOCX, and other document formats into clean, structured Markdown or JSON. This is the first step in many RAG (Retrieval-Augmented Generation) workflows — turn raw documents into text that a language model can reason over.
 
 NOTE: This endpoint uses a *different path* from the standard `/v1/` endpoints — it is not part of the OpenAI API spec.
