@@ -89,10 +89,28 @@ Available model names on production LiteMaaS:
 |Docling (use `include_docling: true`)
 
 |`minimax-m2`
-|Chat, Agentic (Vertex AI — pay-per-token)
+|Chat, Agentic (Vertex AI)
 
 |`qwen3-235b`
-|Chat, Reasoning (Vertex AI — pay-per-token)
+|Chat, Reasoning (Vertex AI)
+
+|`gpt-oss-20b`
+|Chat, cost-effective (Vertex AI)
+
+|`claude-sonnet-4-6`
+|Chat, Claude latest (Vertex AI)
+
+|`claude-opus-4-6`
+|Chat, Claude flagship (Vertex AI)
+
+|`claude-sonnet-4-5`
+|Chat, Claude previous (Vertex AI)
+
+|`claude-3-5-haiku`
+|Chat, Claude fast (Vertex AI)
+
+|`gemini-2.5-pro`
+|Chat, 1M context, reasoning (Vertex AI)
 
 |`gpt-oss-120b`
 |Chat, large (Vertex AI — pay-per-token)
@@ -104,7 +122,7 @@ Available model names on production LiteMaaS:
 |Chat, 1M context (Vertex AI — pay-per-token)
 |===
 
-NOTE: *Vertex AI* models are provisioned programmatically only — not available via self-service portal. Use them only for specific Agentic or MCP use cases.
+NOTE: *Vertex AI* models are provisioned programmatically only — not visible in the self-service portal. This includes the Vertex AI OSS models (`minimax-m2`, `qwen3-235b`, `gpt-oss-120b`, `gpt-oss-20b`), Claude models (`claude-sonnet-4-6`, `claude-opus-4-6`, `claude-sonnet-4-5`, `claude-3-5-haiku`), and `gemini-2.5-pro`. Use them only for specific use cases that require them — each has a real per-token cost.
 
 == User data variables
 
