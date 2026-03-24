@@ -26,6 +26,20 @@ Your key has access to: `{litellm_available_models_list}`
 
 Swap the `model` field in any example below to use a different model from your key.
 
+NOTE: If you are testing *Gemini 2.5 Pro*, always set `max_tokens` to at least *1000*. It is a thinking model that uses reasoning tokens before generating output — low token limits will return an empty response.
+
+[source,bash,subs="attributes+"]
+----
+curl $LITELLM_API_BASE/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $LITELLM_API_KEY" \
+  -d '{
+    "model": "gemini-2.5-pro",
+    "messages": [{"role": "user", "content": "What is Red Hat OpenShift?"}],
+    "max_tokens": 1000
+  }'
+----
+
 == Exercise 1: Basic chat completion
 
 Send your first request to a chat model.
