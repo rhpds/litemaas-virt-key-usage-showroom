@@ -110,7 +110,19 @@ Available model names on production LiteMaaS:
 |Chat, Claude fast (Vertex AI)
 
 |`gemini-2.5-pro`
-|Chat, 1M context, reasoning (Vertex AI)
+|Chat, 1M context, reasoning (Vertex AI) — use `max_tokens >= 1000`
+
+|`claude-sonnet-4-6`
+|Chat, Claude latest Sonnet (Vertex AI)
+
+|`claude-opus-4-6`
+|Chat, Claude flagship (Vertex AI)
+
+|`claude-sonnet-4-5`
+|Chat, Claude Sonnet previous (Vertex AI)
+
+|`claude-3-5-haiku`
+|Chat, Claude fast & cost-effective (Vertex AI)
 
 |`gpt-oss-120b`
 |Chat, large (Vertex AI — pay-per-token)
