@@ -5,7 +5,7 @@ The LiteMaaS API is fully OpenAI-compatible. Every call uses the same format as 
 
 IMPORTANT: Before running any command in this module, make sure you have set your environment variables in the terminal. If you have not done this yet, go back to xref:00-setup.adoc[Setup and Credentials] and complete Step 2.
 
-[source,bash,subs="attributes+"]
+[source,bash,subs="attributes+",role="execute"]
 ----
 export LITELLM_API_BASE="{litellm_api_base_url}"
 export LITELLM_API_KEY="{litellm_virtual_key}"
@@ -33,7 +33,7 @@ Swap the `model` field in any example below to use a different model from your k
 
 NOTE: If you are testing *Gemini 2.5 Pro*, always set `max_tokens` to at least *1000*. It is a thinking model that uses reasoning tokens before generating output — low token limits will return an empty response.
 
-[source,bash,subs="attributes+"]
+[source,bash,subs="attributes+",role="execute"]
 ----
 curl $LITELLM_API_BASE/chat/completions \
   -H "Content-Type: application/json" \
@@ -49,7 +49,7 @@ curl $LITELLM_API_BASE/chat/completions \
 
 Send your first request to a chat model.
 
-[source,bash,subs="attributes+"]
+[source,bash,subs="attributes+",role="execute"]
 ----
 curl $LITELLM_API_BASE/chat/completions \
   -H "Content-Type: application/json" \
@@ -67,7 +67,7 @@ The response contains the model's reply in `choices[0].message.content`.
 
 To extract just the text:
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 curl $LITELLM_API_BASE/chat/completions \
   -H "Content-Type: application/json" \
@@ -88,7 +88,7 @@ curl $LITELLM_API_BASE/chat/completions \
 
 Add `"stream": true` to receive tokens as they are generated rather than waiting for the full response.
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 curl $LITELLM_API_BASE/chat/completions \
   -H "Content-Type: application/json" \
@@ -110,7 +110,7 @@ You will see `data: {...}` lines arriving one by one as the model generates each
 
 Pass previous messages in the `messages` array to give the model conversation history.
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 curl $LITELLM_API_BASE/chat/completions \
   -H "Content-Type: application/json" \
@@ -136,7 +136,7 @@ The model sees the full conversation and responds in context.
 
 Use the `system` role to set instructions that apply to the whole conversation:
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 curl $LITELLM_API_BASE/chat/completions \
   -H "Content-Type: application/json" \
@@ -157,7 +157,7 @@ No new SDK to install.
 
 === Exercise 1: Basic chat with the OpenAI SDK
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 import os
 from openai import OpenAI
@@ -180,7 +180,7 @@ print(response.choices[0].message.content)
 
 Run it:
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 python3 chat_basic.py
 ----
@@ -191,7 +191,7 @@ python3 chat_basic.py
 
 === Exercise 2: Streaming
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 from openai import OpenAI
 
@@ -218,7 +218,7 @@ print()
 
 === Exercise 3: Multi-turn conversation loop
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 from openai import OpenAI
 
@@ -257,7 +257,7 @@ while True:
 
 === Exercise 4: Langchain integration
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage

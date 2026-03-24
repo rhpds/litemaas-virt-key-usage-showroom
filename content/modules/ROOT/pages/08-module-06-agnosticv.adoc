@@ -175,7 +175,7 @@ The role stores these variables in AgnosticD user data. Showroom injects them as
 
 Use `litellm_api_base_url` and `litellm_virtual_key` to call the models endpoint — this is how users confirm their key works:
 
-[source,bash,subs="attributes+"]
+[source,bash,subs="attributes+",role="execute"]
 ----
 curl {litellm_api_base_url}/models \
   -H "Authorization: Bearer {litellm_virtual_key}" \
@@ -184,7 +184,7 @@ curl {litellm_api_base_url}/models \
 
 Or in Python:
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 from openai import OpenAI
 

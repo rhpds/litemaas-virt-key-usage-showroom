@@ -20,7 +20,7 @@ TIP: Examples use `granite-3-2-8b-instruct`. Swap the `model` field with any mod
 
 == Exercise 1: Count tokens with curl
 
-[source,bash,subs="attributes+"]
+[source,bash,subs="attributes+",role="execute"]
 ----
 curl $LITELLM_API_BASE/tokenize \
   -H "Content-Type: application/json" \
@@ -43,7 +43,7 @@ The response includes:
 
 == Exercise 2: Token-aware prompting in Python
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 import requests
 

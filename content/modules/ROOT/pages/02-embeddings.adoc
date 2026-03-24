@@ -17,7 +17,7 @@ By the end of this module, you'll be able to:
 
 == Exercise 1: Generate an embedding with curl
 
-[source,bash,subs="attributes+"]
+[source,bash,subs="attributes+",role="execute"]
 ----
 curl $LITELLM_API_BASE/embeddings \
   -H "Content-Type: application/json" \
@@ -32,7 +32,7 @@ The response contains a `data[0].embedding` field — a list of 768 floating-poi
 
 To see just the dimension count:
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 curl $LITELLM_API_BASE/embeddings \
   -H "Content-Type: application/json" \
@@ -50,7 +50,7 @@ Expected: `Dimensions: 768`
 
 == Exercise 2: Semantic similarity in Python
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 import math
 from openai import OpenAI
@@ -108,7 +108,7 @@ Query: What is OpenShift?
 
 You can embed multiple texts in one API call:
 
-[source,python,subs="attributes+"]
+[source,python,subs="attributes+",role="execute"]
 ----
 from openai import OpenAI
 

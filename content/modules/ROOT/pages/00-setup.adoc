@@ -36,7 +36,7 @@ Click the *Terminal* tab on the right to open a bash session on the bastion host
 Run the following in the terminal.
 All module examples use these two variables — set them now and you will not need to copy your key again:
 
-[source,bash,subs="attributes+"]
+[source,bash,subs="attributes+",role="execute"]
 ----
 export LITELLM_API_BASE="{litellm_api_base_url}"
 export LITELLM_API_KEY="{litellm_virtual_key}"
@@ -46,7 +46,7 @@ export LITELLM_API_KEY="{litellm_virtual_key}"
 
 Confirm your key is active and list the models available to you:
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 curl $LITELLM_API_BASE/models \
   -H "Authorization: Bearer $LITELLM_API_KEY" \
