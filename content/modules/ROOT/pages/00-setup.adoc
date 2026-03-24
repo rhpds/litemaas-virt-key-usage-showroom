@@ -1,6 +1,5 @@
 = Setup and Credentials
 :navtitle: Setup & Credentials
-:source-highlighter: rouge
 
 Before starting the exercises, set up access to your OpenShift cluster and your LiteMaaS API credentials.
 

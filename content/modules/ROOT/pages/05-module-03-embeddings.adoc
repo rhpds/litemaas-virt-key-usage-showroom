@@ -1,6 +1,5 @@
 = Text Embeddings
 :navtitle: Embeddings
-:source-highlighter: rouge
 
 Embeddings convert text into dense numeric vectors that capture semantic meaning.
 Two pieces of text that mean similar things will have vectors that are close together — even if they use different words.

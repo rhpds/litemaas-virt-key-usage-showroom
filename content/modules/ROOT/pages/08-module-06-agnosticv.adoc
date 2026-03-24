@@ -1,6 +1,5 @@
 = AgnosticV Integration Guide
 :navtitle: AgnosticV Integration Guide
-:source-highlighter: rouge
 
 Reference for lab authors who want to add LiteMaaS virtual keys to their own AgnosticV catalogs.
 

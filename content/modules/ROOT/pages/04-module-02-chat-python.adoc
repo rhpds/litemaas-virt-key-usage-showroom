@@ -1,6 +1,5 @@
 = Chat with Python
 :navtitle: Chat with Python
-:source-highlighter: rouge
 
 The OpenAI Python SDK works directly with LiteMaaS — just point it at your API base URL.
 No new SDK to install.

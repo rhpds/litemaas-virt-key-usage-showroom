@@ -1,6 +1,5 @@
 = Token Counting
 :navtitle: Module 3: Tokenize
-:source-highlighter: rouge
 
 IMPORTANT: Before running any command in this module, make sure `LITELLM_API_BASE` and `LITELLM_API_KEY` are set in your terminal. If not, go to xref:00-setup.adoc[Setup and Credentials] and complete Step 2.
 

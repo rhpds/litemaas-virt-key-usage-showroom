@@ -16,6 +16,10 @@ ui:
   supplemental_files:
     - path: ./content/supplemental-ui
 
+asciidoc:
+  attributes:
+    source-highlighter: highlightjs
+
 antora:
   extensions:
     - '@sntke/antora-mermaid-extension'

@@ -1,6 +1,5 @@
 = Token Counting
 :navtitle: Tokenize
-:source-highlighter: rouge
 
 The `/v1/tokenize` endpoint lets you count how many tokens your text will use *before* sending it to the model.
 This is useful for estimating cost, checking whether your input fits within the model's context window, and deciding whether to truncate long documents.

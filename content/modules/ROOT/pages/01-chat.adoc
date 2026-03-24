@@ -1,6 +1,5 @@
 = Module 1: Chat with AI Models
 :navtitle: Module 1: Chat
-:source-highlighter: rouge
 
 The LiteMaaS API is fully OpenAI-compatible. Every call uses the same format as the OpenAI API — so any existing OpenAI example you find will work here by changing the base URL and key.
 

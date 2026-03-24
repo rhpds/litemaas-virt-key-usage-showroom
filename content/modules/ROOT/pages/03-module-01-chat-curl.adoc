@@ -1,6 +1,5 @@
 = Chat with curl
 :navtitle: Chat with curl
-:source-highlighter: rouge
 
 The LiteMaaS API is fully OpenAI-compatible. Every call uses the same format as the OpenAI API — so any existing OpenAI curl example you find will work here by changing the base URL and key.
 
